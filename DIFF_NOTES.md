@@ -1,5 +1,11 @@
-## Removed README wording
+## Repository conversion notes
 
-Moved out of `README.md` per maintainer request:
+This repository was converted from an ESLint-config template into a dedicated
+shared Stylelint config package.
 
-> This package currently targets ESLint 10. The copied Docusaurus JSX-a11y add-on was intentionally omitted because `eslint-plugin-jsx-a11y@6` does not yet publish an ESLint 10 peer range, while the rest of this stack is already on ESLint 10.
+Key conversion areas:
+
+- Package identity and metadata switched to `stylelint-config-nick2bad4u`
+- Runtime dependencies switched to Stylelint configs/plugins/formatters
+- Public entrypoint now exports the shared Stylelint config
+- Preset tests were rewritten for Stylelint config shape validation

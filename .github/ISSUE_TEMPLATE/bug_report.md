@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a reproducible bug in eslint-plugin-tsconfig
+about: Report a reproducible bug in stylelint-config-nick2bad4u
 title: "Bug: "
 labels:
     - bug
@@ -18,10 +18,10 @@ assignees: []
 
 ## Reproduction
 
-### Flat config snippet
+### Stylelint config snippet
 
 ```mjs
-// Minimal eslint.config.mjs (or relevant excerpt)
+// Minimal stylelint.config.mjs (or relevant excerpt)
 ```
 
 ### Minimal code sample
@@ -50,10 +50,8 @@ assignees: []
 
 - Node.js version:
 - npm version:
-- ESLint version:
-- TypeScript version:
-- `@typescript-eslint/*` version:
-- `eslint-plugin-tsconfig` version/commit:
+- Stylelint version:
+- `stylelint-config-nick2bad4u` version/commit:
 - OS:
 
 ## Additional context

@@ -16,6 +16,7 @@
             "./tsconfig.build.json",
             "./eslint.config.js",
             "./eslint.config.mjs",
+            "./stylelint.config.mjs",
             "./vitest.config.ts",
             "./cliff.toml",
             "./README.md",

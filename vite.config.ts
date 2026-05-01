@@ -64,7 +64,7 @@ const typecheckTestFilePatterns = [
 ];
 
 /**
- * Vitest configuration for eslint-config-nick2bad4u.
+ * Vitest configuration for stylelint-config-nick2bad4u.
  */
 const vitestConfig: ReturnType<typeof defineConfig> = defineConfig({
     cacheDir: "./.cache/vitest",
@@ -97,7 +97,6 @@ const vitestConfig: ReturnType<typeof defineConfig> = defineConfig({
             cleanOnRerun: true, // Clean on rerun in watch mode
             exclude: [
                 "**/*.bench.{js,mjs,cjs,ts,mts,cts,jsx,tsx,css}", // Exclude benchmark files,
-                "**/*.config.*",
                 "**/*.css", // CSS modules are transformed into JS stubs but contain no executable logic.
                 "**/*.d.ts",
                 "**/*.less",
@@ -123,6 +122,7 @@ const vitestConfig: ReturnType<typeof defineConfig> = defineConfig({
                 "benchmarks/**", // Exclude all benchmark files from coverage
                 "coverage/**",
                 "electron/**", // Exclude all electron files from frontend coverage
+                "eslint.config.mjs",
                 "html/**", // Exclude generated HTML files
                 "index.ts", // Barrel export file at root
                 "out",
@@ -141,10 +141,11 @@ const vitestConfig: ReturnType<typeof defineConfig> = defineConfig({
                 "stryker_prompts_by_mutator/**",
                 "temp",
                 "temp/**",
+                "vite.config.ts",
                 ...coverageConfigDefaults.exclude,
             ],
             excludeAfterRemap: true, // Exclude files after remapping for accuracy
-            include: ["eslint.config.mjs", "preset.mjs"],
+            include: ["stylelint.config.mjs"],
             // V8 Provider Configuration (Recommended since Vitest v3.2.0)
             provider: "v8" as const, // Switch to V8 for better TypeScript support
             reporter: [

@@ -31,7 +31,7 @@
     "extends": "./tsconfig.json",
     "include": [
         "index.d.ts",
-        "eslint.config.mjs",
-        "preset.mjs"
+        "stylelint.config.d.mts",
+        "stylelint.config.mjs"
     ]
 }

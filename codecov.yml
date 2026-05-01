@@ -6,7 +6,7 @@ codecov:
     notify:
         wait_for_ci: true
     require_ci_to_pass: true
-    slug: Nick2bad4u/eslint-config-nick2bad4u
+    slug: Nick2bad4u/stylelint-config-nick2bad4u
 
 comment:
     behavior: default
@@ -25,8 +25,7 @@ component_management:
         - component_id: package_entry
           name: "Package entrypoint"
           paths:
-              - preset.mjs
-              - eslint.config.mjs
+              - stylelint.config.mjs
 
 coverage:
     precision: 2
@@ -46,20 +45,17 @@ flags:
     os-linux:
         carryforward: true
         paths:
-            - eslint.config.mjs
-            - preset.mjs
+            - stylelint.config.mjs
 
     os-macos:
         carryforward: true
         paths:
-            - eslint.config.mjs
-            - preset.mjs
+            - stylelint.config.mjs
 
     os-windows:
         carryforward: true
         paths:
-            - eslint.config.mjs
-            - preset.mjs
+            - stylelint.config.mjs
 
 ignore:
     - "benchmarks/**"
