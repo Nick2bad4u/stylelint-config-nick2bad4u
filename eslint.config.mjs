@@ -2,6 +2,11 @@ import nick2bad4u from "eslint-config-nick2bad4u";
 
 /** @type {import("eslint").Linter.Config[]} */
 const config = [
+    {
+        ignores: ["stylelint.config.mjs"],
+        name: "Local ignores",
+    },
+
     ...nick2bad4u.configs.all,
 
     // Add repository-specific config entries below as needed.

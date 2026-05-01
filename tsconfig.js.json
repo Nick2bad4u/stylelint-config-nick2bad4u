@@ -29,6 +29,7 @@
         "*.d.mts",
         "*.js",
         "*.mjs",
+        "stylelint.config.mjs",
         "test/**/*.mjs",
         "test/_internal/**/*.d.ts"
     ]
