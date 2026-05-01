@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build and coverage output
+.cache/
+coverage/
+dist/
+release/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+!.vscode/settings.json
+.vscode/

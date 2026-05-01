@@ -1,0 +1,37 @@
+{
+    "$schema": "https://www.schemastore.org/tsconfig.json",
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "erasableSyntaxOnly": true,
+        "incremental": true,
+        "isolatedDeclarations": false,
+        "noCheck": false,
+        "noEmit": true,
+        "tsBuildInfoFile": "./.cache/tsbuildinfo/tsconfig.eslint.tsbuildinfo"
+    },
+    "exclude": [
+        ".cache/**",
+        "coverage/**",
+        "dist/**",
+        "docs/docusaurus/.docusaurus/**",
+        "docs/docusaurus/build/**",
+        "eslint.config.bundled_*.mjs",
+        "node_modules/**",
+        "test/fixtures/**"
+    ],
+    "extends": "./tsconfig.json",
+    "include": [
+        "*.cjs",
+        "*.d.cts",
+        "*.d.ts",
+        "*.d.mts",
+        "*.mjs",
+        "*.ts",
+        ".remarkrc.mjs",
+        "test/**/*.d.ts",
+        "test/**/*.mjs",
+        "test/**/*.ts",
+        "vite.config.ts"
+    ]
+}
