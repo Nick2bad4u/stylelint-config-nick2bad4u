@@ -26,7 +26,7 @@ jobs:
             contents: read
         steps:
             - name: Harden the runner (Audit all outbound calls)
-              uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e # v2.14.2
+              uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
               with:
                   egress-policy: audit
 
@@ -35,7 +35,7 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Secret Scanning (entire repo)
-              uses: trufflesecurity/trufflehog@7c0734f987ad0bb30ee8da210773b800ee2016d3 # v3.93.4
+              uses: trufflesecurity/trufflehog@17456f8c7d042d8c82c9a8ca9e937231f9f42e26 # v3.95.2
               with:
                   base: ""
                   head: ${{ github.ref_name }}
