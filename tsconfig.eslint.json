@@ -29,6 +29,7 @@
         "*.mjs",
         "*.ts",
         ".remarkrc.mjs",
+        "stylelint.config.mjs",
         "test/**/*.d.ts",
         "test/**/*.mjs",
         "test/**/*.ts",
