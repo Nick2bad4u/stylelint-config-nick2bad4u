@@ -21,6 +21,9 @@
         "test/fixtures/**"
     ],
     "extends": "./tsconfig.json",
+    "files": [
+        "stylelint.config.mjs"
+    ],
     "include": [
         "**/*",
         "**/.*"

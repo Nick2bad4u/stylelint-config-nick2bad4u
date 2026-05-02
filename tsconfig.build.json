@@ -30,7 +30,8 @@
     ],
     "extends": "./tsconfig.json",
     "include": [
-        "**/*",
-        "**/.*"
+        "index.d.ts",
+        "stylelint.config.d.mts",
+        "stylelint.config.mjs"
     ]
 }
