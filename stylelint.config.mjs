@@ -287,9 +287,6 @@ const config = defineConfig({
                 // produce subtle layout regressions.
                 "defensive-css/require-named-grid-lines": null,
                 "keyframes-name-pattern": null,
-                "logical-css/require-logical-keywords": null,
-                "logical-css/require-logical-properties": null,
-                "logical-css/require-logical-units": null,
                 "no-descending-specificity": null,
                 "no-duplicate-selectors": null,
                 "order/properties-order": null,
@@ -790,14 +787,9 @@ const config = defineConfig({
         // Length rules
         "length-zero-no-unit": true, // Disallow units for zero lengths (0px -> 0) (verified working)
         "lightness-notation": "percentage",
-        // Logical-css/require-logical-keywords, require-logical-properties, and
-        // require-logical-units are replaced by the built-in layout-mapping rules
-        // above (property-layout-mappings, value-keyword-layout-mappings,
-        // unit-layout-mappings). The plugin (stylelint-plugin-logical-css) has
-        // been removed from the plugins list.
-        "logical-css/require-logical-keywords": null,
-        "logical-css/require-logical-properties": null,
-        "logical-css/require-logical-units": null,
+        // Logical-css plugin rules were replaced by built-in layout mapping rules
+        // (property-layout-mappings, value-keyword-layout-mappings,
+        // unit-layout-mappings). The plugin has been removed from this config.
         // Layout and structure
         "max-nesting-depth": 4,
         // Media query rules

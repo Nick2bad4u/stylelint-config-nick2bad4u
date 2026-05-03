@@ -1,3 +1,4 @@
+import stylelint from "stylelint";
 import sharedConfig from "stylelint-config-nick2bad4u";
 import { describe, expect, it } from "vitest";
 
@@ -42,5 +43,24 @@ describe("stylelint-config-nick2bad4u preset", () => {
                 "stylelint-config-tailwindcss"
             )
         ).toBeTruthy();
+    });
+
+    it("does not contain unknown Stylelint rules", async () => {
+        expect.assertions(2);
+
+        const lintResult = await stylelint.lint({
+            code: "a { color: red; }",
+            config: sharedConfig,
+        });
+
+        const allWarnings = lintResult.results.flatMap(
+            (result) => result.warnings
+        );
+        const unknownRuleWarnings = allWarnings.filter((warning) =>
+            warning.text.toLowerCase().includes("unknown rule")
+        );
+
+        expect(lintResult.errored).toBeFalsy();
+        expect(unknownRuleWarnings).toHaveLength(0);
     });
 });
