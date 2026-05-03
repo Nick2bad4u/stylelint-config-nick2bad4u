@@ -319,6 +319,9 @@ const config = defineConfig({
                 // SCSS specific rules
                 "at-rule-no-unknown": null,
                 "scss/at-rule-no-unknown": true,
+                // Selector-no-invalid is CSS-only; SCSS placeholder selectors
+                // (%name) and other SCSS-specific syntax would trigger false positives.
+                "selector-no-invalid": null,
             },
         },
     ],
@@ -354,7 +357,6 @@ const config = defineConfig({
          */
         // Core functional plugins
         "stylelint-plugin-defensive-css",
-        "stylelint-plugin-logical-css",
         "stylelint-gamut",
         "stylelint-use-nesting",
         "stylelint-prettier",
@@ -788,36 +790,14 @@ const config = defineConfig({
         // Length rules
         "length-zero-no-unit": true, // Disallow units for zero lengths (0px -> 0) (verified working)
         "lightness-notation": "percentage",
-        /**
-         * Logical properties and values promotion.
-         *
-         * @remarks
-         * Encourages use of logical properties (e.g., margin-inline-start
-         * instead of margin-left) for better internationalization support. Set
-         * to warning level to gradually adopt these practices.
-         *
-         * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties | MDN Logical Properties}
-         */
-        "logical-css/require-logical-keywords": [
-            true,
-            {
-                ignore: [
-                    "caption-side",
-                    "offset-anchor",
-                    "offset-position",
-                ],
-                severity: "error",
-            },
-        ],
-        /**
-         * Logical units enforcement.
-         *
-         * @remarks
-         * Promotes logical units (e.g., inline-size instead of width) for
-         * improved internationalization and writing mode support.
-         */
-        "logical-css/require-logical-properties": [true, { severity: "error" }],
-        "logical-css/require-logical-units": [true, { severity: "warning" }],
+        // Logical-css/require-logical-keywords, require-logical-properties, and
+        // require-logical-units are replaced by the built-in layout-mapping rules
+        // above (property-layout-mappings, value-keyword-layout-mappings,
+        // unit-layout-mappings). The plugin (stylelint-plugin-logical-css) has
+        // been removed from the plugins list.
+        "logical-css/require-logical-keywords": null,
+        "logical-css/require-logical-properties": null,
+        "logical-css/require-logical-units": null,
         // Layout and structure
         "max-nesting-depth": 4,
         // Media query rules
@@ -975,9 +955,10 @@ const config = defineConfig({
         "relative-selector-nesting-notation": "explicit",
 
         "rule-empty-line-before": null,
-        "rule-nesting-at-rule-required-list": null,
-        "rule-selector-property-disallowed-list": null,
 
+        "rule-nesting-at-rule-required-list": null,
+
+        "rule-selector-property-disallowed-list": null,
         /**
          * Scale-based design system rules.
          *
@@ -991,8 +972,8 @@ const config = defineConfig({
         // Scale rules (stylelint-scales)
         "scale-unlimited/declaration-strict-value": null,
         "scales/alpha-values": null,
-        "scales/border-widths": null,
 
+        "scales/border-widths": null,
         /**
          * Font size scale configuration.
          *
@@ -1058,8 +1039,8 @@ const config = defineConfig({
             ],
         ],
         "scales/font-weights": null,
-        "scales/letter-spacings": null,
 
+        "scales/letter-spacings": null,
         /**
          * Line height scale configuration.
          *
@@ -1079,6 +1060,9 @@ const config = defineConfig({
         ],
         "scales/radii": null,
 
+        "scales/sizes": null,
+        "scales/space": null,
+
         /**
          * Prettier integration for code formatting.
          *
@@ -1088,11 +1072,8 @@ const config = defineConfig({
          */
         // Prettier integration
 
-        "scales/sizes": null,
-        "scales/space": null,
         "scales/word-spacings": null,
         "scales/z-indices": null,
-
         /**
          * SCSS (Sass) specific linting rules.
          *
@@ -1106,6 +1087,7 @@ const config = defineConfig({
         // SCSS specific rules (stylelint-scss)
         "scss/at-each-key-value-single-line": true,
         "scss/at-function-named-arguments": "always",
+
         "scss/at-import-partial-extension-allowed-list": null,
         "scss/at-import-partial-extension-disallowed-list": null,
         "scss/at-mixin-named-arguments": "always",
@@ -1147,7 +1129,6 @@ const config = defineConfig({
         "selector-attribute-operator-allowed-list": null,
         "selector-attribute-operator-disallowed-list": null,
         "selector-attribute-quotes": "always",
-
         /**
          * Rule to enforce consistent class selector patterns.
          *
@@ -1159,6 +1140,7 @@ const config = defineConfig({
          */
         "selector-class-pattern": null,
         "selector-combinator-allowed-list": null,
+
         "selector-combinator-disallowed-list": null,
         "selector-disallowed-list": null,
         "selector-max-attribute": null,
@@ -1173,6 +1155,22 @@ const config = defineConfig({
         "selector-max-universal": null,
         "selector-nested-pattern": null,
         "selector-no-deprecated": true,
+        /**
+         * Disallow invalid selectors.
+         *
+         * @remarks
+         * Catches syntactically invalid selectors such as `:nth-child(2n+)`,
+         * `[0foo]`, or `a ) b`. Complements the more specific
+         * `selector-pseudo-class-no-unknown` and `selector-type-no-unknown`
+         * rules with broader syntax validation.
+         *
+         * WARNING: This rule is CSS-only. It is nulled in the SCSS override
+         * below because SCSS-specific selectors (e.g., `%placeholder`) can be
+         * considered invalid by the CSS parser.
+         *
+         * @see {@link https://stylelint.io/user-guide/rules/selector-no-invalid | selector-no-invalid}
+         */
+        "selector-no-invalid": true,
         "selector-no-qualifying-type": null,
         "selector-not-notation": "complex",
         "selector-pseudo-class-allowed-list": null,
@@ -1186,8 +1184,6 @@ const config = defineConfig({
         "shorthand-property-no-redundant-values": true,
         "string-no-newline": true,
         "syntax-string-no-invalid": true,
-        // Time rules
-
         /**
          * Minimum animation/transition duration.
          *
@@ -1200,9 +1196,57 @@ const config = defineConfig({
          */
         "time-min-milliseconds": 100, // Minimum 100ms for animations/transitions (performance) (verified working)
         "unit-allowed-list": null,
+        // Time rules
+
         "unit-disallowed-list": null,
+        // Replaced by built-in unit-layout-mappings below
+        // (was: logical-css/require-logical-units)
+        /**
+         * Logical units enforcement.
+         *
+         * @remarks
+         * Requires flow-relative viewport and container units (e.g., `vi`
+         * instead of `vw`, `vb` instead of `vh`, `cqi` instead of `cqw`).
+         * Mirrors the same enforcement as `property-layout-mappings` at the
+         * unit level. Set to warning to allow gradual adoption.
+         *
+         * @see {@link https://stylelint.io/user-guide/rules/unit-layout-mappings | unit-layout-mappings}
+         */
+        "unit-layout-mappings": [
+            "flow-relative",
+            {
+                severity: "warning",
+            },
+        ],
         "unit-no-unknown": true,
         "value-keyword-case": "lower",
+        // Replaced by built-in value-keyword-layout-mappings below
+        // (was: logical-css/require-logical-keywords)
+        /**
+         * Logical value keywords enforcement.
+         *
+         * @remarks
+         * Requires flow-relative value keywords (e.g., `inline-start` instead
+         * of `left`, `block-start` instead of `top`). Ignores properties where
+         * physical keywords are part of the spec or unavoidable.
+         *
+         * @see {@link https://stylelint.io/user-guide/rules/value-keyword-layout-mappings | value-keyword-layout-mappings}
+         */
+        "value-keyword-layout-mappings": [
+            "flow-relative",
+            {
+                // Caption-side: top/bottom are spec-standard; logical equivalents
+                // (block-start/block-end) have limited browser support as of 2026.
+                // offset-anchor / offset-position use positional keywords by design
+                // (CSS Motion Path spec) and have no logical equivalents.
+                ignoreProperties: [
+                    "caption-side",
+                    "offset-anchor",
+                    "offset-position",
+                ],
+                severity: "error",
+            },
+        ],
     },
     // Validate: true, -- Disabled: not real config option only CLI flag
 });
