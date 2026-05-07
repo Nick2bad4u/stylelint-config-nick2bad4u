@@ -287,6 +287,8 @@ const config = defineConfig({
                 // because Prettier/formatting + upstream CSS assumptions can
                 // produce subtle layout regressions.
                 "defensive-css/require-named-grid-lines": null,
+                // We prefer to use `font/no-local-src-in-font-face`
+                "docusaurus/require-font-face-local-src-before-remote": null,
                 "keyframes-name-pattern": null,
                 "no-descending-specificity": null,
                 "no-duplicate-selectors": null,
