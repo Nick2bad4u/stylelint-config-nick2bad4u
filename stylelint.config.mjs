@@ -124,6 +124,7 @@ const config = defineConfig({
         "stylelint-config-idiomatic-order",
         "stylelint-config-standard-scss",
         "stylelint-plugin-docusaurus/configs/docusaurus-all",
+        "stylelint-plugin-font/configs/font-all",
         "stylelint-config-tailwindcss",
     ],
 
@@ -354,6 +355,7 @@ const config = defineConfig({
          */
         // Core functional plugins
         "stylelint-plugin-defensive-css",
+        "stylelint-plugin-font",
         "stylelint-gamut",
         "stylelint-use-nesting",
         "stylelint-prettier",

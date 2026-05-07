@@ -107,7 +107,7 @@
         "stylelint-config-tailwindcss": "^1.0.1",
         "stylelint-declaration-block-no-ignored-properties": "^3.0.0",
         "stylelint-declaration-strict-value": "^1.11.1",
-        "stylelint-define-config": "^17.9.0",
+        "stylelint-define-config": "^17.10.0",
         "stylelint-find-new-rules": "^6.0.0",
         "stylelint-formatter-gitlab-code-quality-report": "^1.1.0",
         "stylelint-formatter-pretty": "^4.0.1",
@@ -119,7 +119,8 @@
         "stylelint-no-unsupported-browser-features": "^8.1.1",
         "stylelint-order": "^8.1.1",
         "stylelint-plugin-defensive-css": "^2.9.1",
-        "stylelint-plugin-docusaurus": "^2.0.0",
+        "stylelint-plugin-docusaurus": "^2.0.1",
+        "stylelint-plugin-font": "^1.1.1",
         "stylelint-plugin-use-baseline": "^1.4.1",
         "stylelint-prettier": "^5.0.3",
         "stylelint-scales": "^5.0.0",
@@ -139,19 +140,19 @@
         "picocolors": "^1.1.1",
         "prettier": "^3.8.3",
         "prettier-config-nick2bad4u": "^1.0.9",
-        "publint": "^0.3.18",
+        "publint": "^0.3.19",
         "secretlint": "^12.3.1",
-        "secretlint-config-nick2bad4u": "^1.0.3",
+        "secretlint-config-nick2bad4u": "^1.0.4",
         "sort-package-json": "^3.6.1",
-        "stylelint": "^17.10.0",
+        "stylelint": "^17.11.0",
         "typescript": "^6.0.3",
         "vite": "^8.0.10",
         "vitest": "^4.1.5"
     },
     "peerDependencies": {
-        "stylelint": "^17.9.1 || ^17.10.0"
+        "stylelint": "^17.9.1 || ^17.11.0"
     },
-    "packageManager": "npm@11.13.0",
+    "packageManager": "npm@11.14.0",
     "engines": {
         "node": ">=22.0.0"
     },

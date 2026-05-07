@@ -17,3 +17,4 @@ npm-debug.log*
 Thumbs.db
 !.vscode/settings.json
 .vscode/
+.stylelintcache
