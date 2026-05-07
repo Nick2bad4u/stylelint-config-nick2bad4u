@@ -1,7 +1,7 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
     "name": "stylelint-config-nick2bad4u",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "private": false,
     "description": "Shared Stylelint config for Nick2bad4u projects.",
     "keywords": [
