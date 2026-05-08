@@ -86,8 +86,8 @@
     "dependencies": {
         "@csstools/stylelint-formatter-github": "^2.0.0",
         "@double-great/stylelint-a11y": "^3.4.11",
-        "@stylelint-types/stylelint-order": "^7.0.1",
-        "@stylelint-types/stylelint-stylistic": "^5.0.0",
+        "@stylelint-types/stylelint-order": "^8.1.1",
+        "@stylelint-types/stylelint-stylistic": "^5.1.0",
         "@stylistic/stylelint-plugin": "^5.1.0",
         "postcss-html": "^1.8.1",
         "postcss-scss": "^4.0.9",
@@ -107,7 +107,7 @@
         "stylelint-config-tailwindcss": "^1.0.1",
         "stylelint-declaration-block-no-ignored-properties": "^3.0.0",
         "stylelint-declaration-strict-value": "^1.11.1",
-        "stylelint-define-config": "^17.10.0",
+        "stylelint-define-config": "^17.11.0",
         "stylelint-find-new-rules": "^6.0.0",
         "stylelint-formatter-gitlab-code-quality-report": "^1.1.0",
         "stylelint-formatter-pretty": "^4.0.1",
@@ -130,7 +130,7 @@
     },
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.2",
-        "@types/node": "^25.6.0",
+        "@types/node": "^25.6.2",
         "@vitest/coverage-v8": "^4.1.5",
         "cross-env": "^10.1.0",
         "eslint": "^10.3.0",
@@ -139,20 +139,20 @@
         "npm-package-json-lint": "^10.4.0",
         "picocolors": "^1.1.1",
         "prettier": "^3.8.3",
-        "prettier-config-nick2bad4u": "^1.0.9",
-        "publint": "^0.3.19",
-        "secretlint": "^12.3.1",
+        "prettier-config-nick2bad4u": "^1.0.10",
+        "publint": "^0.3.20",
+        "secretlint": "^13.0.0",
         "secretlint-config-nick2bad4u": "^1.0.4",
         "sort-package-json": "^3.6.1",
         "stylelint": "^17.11.0",
         "typescript": "^6.0.3",
-        "vite": "^8.0.10",
+        "vite": "^8.0.11",
         "vitest": "^4.1.5"
     },
     "peerDependencies": {
         "stylelint": "^17.9.1 || ^17.11.0"
     },
-    "packageManager": "npm@11.14.0",
+    "packageManager": "npm@11.14.1",
     "engines": {
         "node": ">=22.0.0"
     },

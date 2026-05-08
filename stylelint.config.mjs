@@ -767,6 +767,7 @@ const config = defineConfig({
         "font-family-no-missing-generic-family-keyword": true,
         // Font rules
         "font-weight-notation": "numeric",
+        "font/no-local-src-in-font-face": null,
         "function-allowed-list": null,
         "function-calc-no-unspaced-operator": true,
         "function-disallowed-list": null,
