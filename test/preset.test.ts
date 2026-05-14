@@ -8,7 +8,7 @@ describe("stylelint-config-nick2bad4u preset", () => {
     it("exports a stylelint config object", () => {
         expect.assertions(2);
 
-        expect(typeof sharedConfig).toBe("object");
+        expect(sharedConfig).toBeTypeOf("object");
         expect(sharedConfig).toBeTruthy();
     });
 
@@ -18,7 +18,7 @@ describe("stylelint-config-nick2bad4u preset", () => {
         expect(Array.isArray(sharedConfig.extends)).toBeTruthy();
         expect(Array.isArray(sharedConfig.plugins)).toBeTruthy();
         expect(Array.isArray(sharedConfig.overrides)).toBeTruthy();
-        expect(typeof sharedConfig.rules).toBe("object");
+        expect(sharedConfig.rules).toBeTypeOf("object");
     });
 
     it("matches the direct package entrypoint export", () => {

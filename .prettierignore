@@ -10,6 +10,8 @@ coverage/
 *.min.js
 *.min.css
 dist/
+temp/
+.temp/
 docs/docusaurus/docs/
 docs/docusaurus/build/
 docs/docusaurus/.docusaurus/
