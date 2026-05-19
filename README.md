@@ -56,6 +56,10 @@ export default {
 - Tailwind compatibility
 - Docusaurus CSS support
 - Accessibility, logical CSS, and performance plugins
+- CSS performance budget rules via
+  `stylelint-plugin-css-performance-budget/configs/performance-budget-all`
+- Container query correctness rules via
+  `stylelint-plugin-container-query-sanity/configs/container-query-all`
 
 ## Supported syntax surfaces
 

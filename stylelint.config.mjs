@@ -44,7 +44,6 @@
  *
  * @see {@link https://github.com/stylelint-types/stylelint-define-config | stylelint-define-config}
  */
-// eslint-disable-next-line import-x/no-named-as-default -- Rule wants packages not in dev, doesn't apply here
 import defineConfig from "stylelint-define-config";
 
 /**
@@ -111,6 +110,8 @@ const config = defineConfig({
      * - SCSS-specific enhancements
      * - Tailwind CSS compatibility
      * - Docusaurus-specific rule pack
+     * - Container query sanity checks
+     * - CSS performance budget enforcement
      *
      * @see {@link https://stylelint.io/user-guide/configure/#extends | extends Documentation}
      */
@@ -121,6 +122,8 @@ const config = defineConfig({
         "stylelint-config-standard-scss",
         "stylelint-plugin-docusaurus/configs/docusaurus-all",
         "stylelint-plugin-font/configs/font-all",
+        "stylelint-plugin-css-performance-budget/configs/performance-budget-all",
+        "stylelint-plugin-container-query-sanity/configs/container-query-all",
         "stylelint-config-tailwindcss",
     ],
 

@@ -55,7 +55,7 @@
         "lint": "cross-env NODE_OPTIONS=--max_old_space_size=8192 eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
         "lint:all": "npm run lint && npm run typecheck && npm run test && npm run test:stylelint-config && npm run lint:prettier && npm run lint:package && npm run lint:yaml && npm run lint:secretlint",
         "lint:all:fix": "npm run lint:fix && npm run lint:prettier:fix && npm run lint:package:fix && npm run typecheck && npm run test && npm run test:stylelint-config && npm run lint:yaml:fix && npm run lint:secretlint",
-        "lint:attw": "attw --pack . --profile esm-only",
+        "lint:attw": "attw . --pack --profile esm-only --entrypoints \".\" \"./package.json\"",
         "lint:fix": "npm run lint -- --fix",
         "lint:package": "npm run lint:package-sort && npm run lint:package-json && npm run lint:package-check",
         "lint:package:fix": "sort-package-json package.json",
@@ -83,9 +83,12 @@
         "update-deps": "npx ncu -i --install never && npm update --force && npm install --force && npm run sync:peer-stylelint && npm run sync:node-version",
         "verify": "npm run release:verify"
     },
+    "overrides": {
+        "fflate": "0.8.2"
+    },
     "dependencies": {
         "@csstools/stylelint-formatter-github": "^2.0.0",
-        "@double-great/stylelint-a11y": "^3.4.12",
+        "@double-great/stylelint-a11y": "^3.4.13",
         "@stylelint-types/stylelint-order": "^8.1.1",
         "@stylelint-types/stylelint-stylistic": "^5.1.0",
         "@stylistic/stylelint-plugin": "^5.1.0",
@@ -98,7 +101,7 @@
         "stylelint-codeframe-formatter": "^1.2.0",
         "stylelint-config-alphabetical-order": "^2.0.0",
         "stylelint-config-idiomatic-order": "^10.0.0",
-        "stylelint-config-inspector": "^2.1.2",
+        "stylelint-config-inspector": "^2.3.0",
         "stylelint-config-recess-order": "^7.7.0",
         "stylelint-config-recommended": "^18.0.0",
         "stylelint-config-sass-guidelines": "^13.0.0",
@@ -118,6 +121,8 @@
         "stylelint-no-browser-hacks": "^2.0.3",
         "stylelint-no-unsupported-browser-features": "^8.1.1",
         "stylelint-order": "^8.1.1",
+        "stylelint-plugin-container-query-sanity": "^0.1.1",
+        "stylelint-plugin-css-performance-budget": "^2.0.3",
         "stylelint-plugin-defensive-css": "^2.9.2",
         "stylelint-plugin-docusaurus": "^2.0.2",
         "stylelint-plugin-font": "^1.1.3",
@@ -130,27 +135,27 @@
     },
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.2",
-        "@types/node": "^25.7.0",
+        "@types/node": "^25.9.0",
         "@vitest/coverage-v8": "^4.1.6",
         "cross-env": "^10.1.0",
-        "eslint": "^10.3.0",
-        "eslint-config-nick2bad4u": "^1.0.16",
+        "eslint": "^10.4.0",
+        "eslint-config-nick2bad4u": "^1.1.0",
         "git-cliff": "^2.13.1",
         "npm-package-json-lint": "^10.4.0",
         "picocolors": "^1.1.1",
         "prettier": "^3.8.3",
-        "prettier-config-nick2bad4u": "^1.0.12",
+        "prettier-config-nick2bad4u": "^1.0.13",
         "publint": "^0.3.21",
-        "secretlint": "^13.0.0",
-        "secretlint-config-nick2bad4u": "^1.0.4",
+        "secretlint": "^13.0.2",
+        "secretlint-config-nick2bad4u": "^1.0.5",
         "sort-package-json": "^3.6.1",
-        "stylelint": "^17.11.0",
+        "stylelint": "^17.11.1",
         "typescript": "^6.0.3",
-        "vite": "^8.0.12",
+        "vite": "^8.0.13",
         "vitest": "^4.1.6"
     },
     "peerDependencies": {
-        "stylelint": "^17.9.1 || ^17.11.0"
+        "stylelint": "^17.9.1 || ^17.11.1"
     },
     "packageManager": "npm@11.14.1",
     "engines": {

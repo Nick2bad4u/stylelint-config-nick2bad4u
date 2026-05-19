@@ -6,19 +6,28 @@ import config from "../stylelint.config.mjs";
 
 describe("stylelint-config-nick2bad4u preset", () => {
     it("exports a stylelint config object", () => {
-        expect.assertions(2);
+        expect.assertions(1);
 
         expect(sharedConfig).toBeTypeOf("object");
-        expect(sharedConfig).toBeTruthy();
     });
 
     it("contains the expected top-level stylelint sections", () => {
         expect.assertions(4);
 
-        expect(Array.isArray(sharedConfig.extends)).toBeTruthy();
-        expect(Array.isArray(sharedConfig.plugins)).toBeTruthy();
-        expect(Array.isArray(sharedConfig.overrides)).toBeTruthy();
-        expect(sharedConfig.rules).toBeTypeOf("object");
+        expect(sharedConfig.extends).toStrictEqual([
+            "stylelint-config-standard",
+            "stylelint-config-recess-order",
+            "stylelint-config-idiomatic-order",
+            "stylelint-config-standard-scss",
+            "stylelint-plugin-docusaurus/configs/docusaurus-all",
+            "stylelint-plugin-font/configs/font-all",
+            "stylelint-plugin-css-performance-budget/configs/performance-budget-all",
+            "stylelint-plugin-container-query-sanity/configs/container-query-all",
+            "stylelint-config-tailwindcss",
+        ]);
+        expect(sharedConfig.plugins).toHaveLength(18);
+        expect(sharedConfig.overrides).toHaveLength(6);
+        expect(sharedConfig.rules).toHaveProperty("prettier/prettier", true);
     });
 
     it("matches the direct package entrypoint export", () => {
@@ -27,22 +36,26 @@ describe("stylelint-config-nick2bad4u preset", () => {
         expect(sharedConfig).toBe(config);
     });
 
-    it("includes baseline standard presets", () => {
-        expect.assertions(3);
+    it("includes baseline and plugin all presets", () => {
+        expect.assertions(7);
 
-        expect(
-            (sharedConfig.extends ?? []).includes("stylelint-config-standard")
-        ).toBeTruthy();
-        expect(
-            (sharedConfig.extends ?? []).includes(
-                "stylelint-config-standard-scss"
-            )
-        ).toBeTruthy();
-        expect(
-            (sharedConfig.extends ?? []).includes(
-                "stylelint-config-tailwindcss"
-            )
-        ).toBeTruthy();
+        expect(sharedConfig.extends).toContain("stylelint-config-standard");
+        expect(sharedConfig.extends).toContain(
+            "stylelint-config-standard-scss"
+        );
+        expect(sharedConfig.extends).toContain("stylelint-config-tailwindcss");
+        expect(sharedConfig.extends).toContain(
+            "stylelint-plugin-css-performance-budget/configs/performance-budget-all"
+        );
+        expect(sharedConfig.extends).toContain(
+            "stylelint-plugin-container-query-sanity/configs/container-query-all"
+        );
+        expect(sharedConfig.extends).not.toContain(
+            "stylelint-plugin-css-performance-budget/configs/performance-budget-recommended"
+        );
+        expect(sharedConfig.extends).not.toContain(
+            "stylelint-plugin-container-query-sanity/configs/container-query-recommended"
+        );
     });
 
     it("does not contain unknown Stylelint rules", async () => {
@@ -60,7 +73,7 @@ describe("stylelint-config-nick2bad4u preset", () => {
             warning.text.toLowerCase().includes("unknown rule")
         );
 
-        expect(lintResult.errored).toBeFalsy();
+        expect(lintResult.results).toHaveLength(1);
         expect(unknownRuleWarnings).toHaveLength(0);
     });
 });
