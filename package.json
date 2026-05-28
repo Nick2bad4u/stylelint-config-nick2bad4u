@@ -48,7 +48,7 @@
         "build": "npm run clean:dist && tsc -p tsconfig.build.json",
         "changelog:generate": "git-cliff --config cliff.toml --output CHANGELOG.md",
         "changelog:preview": "git-cliff --config cliff.toml --unreleased",
-        "changelog:release-notes": "git-cliff --config cliff.toml --latest --strip all",
+        "changelog:release-notes": "git-cliff --config cliff.toml --current --strip all",
         "clean:dist": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
         "coverage": "vitest run --coverage",
         "lint": "cross-env NODE_OPTIONS=--max_old_space_size=8192 eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
