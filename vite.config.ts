@@ -145,7 +145,7 @@ const vitestConfig: ReturnType<typeof defineConfig> = defineConfig({
                 ...coverageConfigDefaults.exclude,
             ],
             excludeAfterRemap: true, // Exclude files after remapping for accuracy
-            include: ["stylelint.config.mjs"],
+            include: ["src/stylelint.config.ts"],
             // V8 Provider Configuration (Recommended since Vitest v3.2.0)
             provider: "v8" as const, // Switch to V8 for better TypeScript support
             reporter: [

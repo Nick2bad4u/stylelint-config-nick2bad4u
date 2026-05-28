@@ -2,8 +2,6 @@ import stylelint from "stylelint";
 import sharedConfig from "stylelint-config-nick2bad4u";
 import { describe, expect, it } from "vitest";
 
-import config from "../stylelint.config.mjs";
-
 describe("stylelint-config-nick2bad4u preset", () => {
     it("exports a stylelint config object", () => {
         expect.assertions(1);
@@ -31,8 +29,10 @@ describe("stylelint-config-nick2bad4u preset", () => {
         expect(sharedConfig.rules).toHaveProperty("prettier/prettier", true);
     });
 
-    it("matches the direct package entrypoint export", () => {
+    it("matches the direct package entrypoint export", async () => {
         expect.assertions(1);
+
+        const { default: config } = await import("../dist/stylelint.config.js");
 
         expect(sharedConfig).toBe(config);
     });

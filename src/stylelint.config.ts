@@ -1,4 +1,4 @@
-/**
+/*
  * Shared Stylelint configuration for Nick2bad4u projects.
  *
  * This configuration enforces modern CSS coding standards, logical properties,
@@ -22,53 +22,16 @@
  * @see {@link https://www.schemastore.org/stylelintrc.json | Stylelint Config Schema}
  */
 
-/**
- * Type definition for the complete Stylelint configuration object.
- *
- * @see {@link https://stylelint.io/user-guide/configure | Stylelint Config Schema}
+/*
+ * Stylelint's first-party `Config` type validates the public configuration
+ * surface while still accepting runtime-supported rule shorthand such as
+ * `true`, strings, and tuple options.
  */
-/** @typedef {import("stylelint").Config} */
-/** @typedef {import("stylelint").LinterOptions} */
-/** @typedef {import("stylelint").PostcssPluginOptions} */
-/** @typedef {import("stylelint").WarningOptions} */
-/** @typedef {import("stylelint").RuleOptions} */
-/** @typedef {import("stylelint").RuleOptionsPossible} */
-/** @typedef {import("stylelint").GetPostcssOptions} */
+import type { Config } from "stylelint";
 
-/**
- * Enhanced configuration helper that provides TypeScript intellisense and
- * validation.
- *
- * The stylelint-define-config package wraps the configuration object with
- * proper TypeScript type checking while preserving runtime behavior.
- *
- * @see {@link https://github.com/stylelint-types/stylelint-define-config | stylelint-define-config}
- */
-import defineConfig from "stylelint-define-config";
-
-/**
- * Complete shared Stylelint configuration object.
- *
- * This configuration provides a comprehensive setup for CSS/SCSS linting across
- * multiple Nick2bad4u projects. It combines multiple plugin ecosystems to
- * enforce modern CSS standards, accessibility guidelines, and performance best
- * practices.
- *
- * The configuration is structured in several key sections:
- *
- * - Basic options (allowEmptyInput, defaultSeverity, fix, etc.)
- * - Extended configurations from popular rule sets
- * - File-type specific overrides for different syntax requirements
- * - Plugin definitions for enhanced functionality
- * - Comprehensive rule definitions with custom settings
- *
- * @public
- *
- * @see {@link https://stylelint.io/user-guide/configure | Stylelint Configuration Documentation}
- * @see {@link https://github.com/stylelint/stylelint-config-standard | stylelint-config-standard Rules}
- */
-const config = defineConfig({
-    /**
+/** Shared Stylelint configuration object exported by this package. */
+const config: Config = {
+    /*
      * Controls whether Stylelint should allow empty input files.
      *
      * @default false
@@ -77,7 +40,7 @@ const config = defineConfig({
      */
     allowEmptyInput: false,
 
-    /**
+    /*
      * Enables caching of lint results to improve performance on subsequent
      * runs.
      *
@@ -87,7 +50,7 @@ const config = defineConfig({
      */
     cache: true,
 
-    /**
+    /*
      * Default severity level for all rules that don't specify their own
      * severity.
      *
@@ -97,7 +60,7 @@ const config = defineConfig({
      */
     defaultSeverity: "warning",
 
-    /**
+    /*
      * Baseline configuration sets that provide foundational rules and
      * standards.
      *
@@ -129,7 +92,7 @@ const config = defineConfig({
         "stylelint-config-tailwindcss",
     ],
 
-    /**
+    /*
      * Controls whether Stylelint should automatically fix problems where
      * possible.
      *
@@ -142,7 +105,7 @@ const config = defineConfig({
      */
     fix: false,
 
-    /**
+    /*
      * Controls whether disable comments are ignored.
      *
      * @default false
@@ -151,7 +114,7 @@ const config = defineConfig({
      */
     ignoreDisables: false,
 
-    /**
+    /*
      * File-type specific configuration overrides for different CSS syntaxes and
      * contexts.
      *
@@ -168,7 +131,7 @@ const config = defineConfig({
     // Override configurations for different file types
     overrides: [
         {
-            /**
+            /*
              * Configuration for HTML files containing inline CSS styles.
              *
              * Uses postcss-html parser to extract and lint CSS from style
@@ -187,7 +150,7 @@ const config = defineConfig({
             },
         },
         {
-            /**
+            /*
              * Configuration for TypeScript/JavaScript React files using
              * CSS-in-JS.
              *
@@ -212,7 +175,7 @@ const config = defineConfig({
             },
         },
         {
-            /**
+            /*
              * Configuration for styled-jsx syntax in React components.
              *
              * Styled-jsx uses a different syntax pattern than other CSS-in-JS
@@ -231,7 +194,7 @@ const config = defineConfig({
             },
         },
         {
-            /**
+            /*
              * Configuration for CSS Modules with local scoping.
              *
              * CSS Modules automatically scope class and ID names, making global
@@ -247,7 +210,7 @@ const config = defineConfig({
             },
         },
         {
-            /**
+            /*
              * Configuration for Docusaurus documentation CSS files.
              *
              * Docusaurus themes often require specific CSS patterns for UI
@@ -257,10 +220,10 @@ const config = defineConfig({
              */
             // Docusaurus documentation files
             files: [
-                "docs/docusaurus/**/*.{css,scss}",
+                "docs/docusaurus/*/*.{css,scss}",
                 "docs/docusaurus/src/css/custom.css",
                 "docs/docusaurus/src/pages/index.module.css",
-                "docs/docusaurus/**/*.module.{css,scss}",
+                "docs/docusaurus/*/*.module.{css,scss}",
             ],
             rules: {
                 // Relax accessibility rules for documentation UI elements
@@ -298,7 +261,7 @@ const config = defineConfig({
             },
         },
         {
-            /**
+            /*
              * Configuration for SCSS/Sass preprocessor files.
              *
              * Uses postcss-scss parser to handle SCSS syntax including
@@ -319,7 +282,7 @@ const config = defineConfig({
         },
     ],
 
-    /**
+    /*
      * Collection of Stylelint plugins providing specialized linting
      * capabilities.
      *
@@ -337,14 +300,14 @@ const config = defineConfig({
      * @see {@link https://stylelint.io/user-guide/configure/#plugins | plugins Documentation}
      */
     plugins: [
-        /**
+        /*
          * Accessibility-focused linting rules for inclusive CSS.
          *
          * @see {@link https://github.com/double-great/stylelint-a11y | @double-great/stylelint-a11y}
          */
         "@double-great/stylelint-a11y", // Accessibility rules
 
-        /**
+        /*
          * Core functional plugins for CSS best practices and performance.
          */
         // Core functional plugins
@@ -355,7 +318,7 @@ const config = defineConfig({
         "stylelint-prettier",
         "stylelint-high-performance-animation",
 
-        /**
+        /*
          * Modern CSS standards and feature plugins.
          */
         // Modern CSS and Standards plugins
@@ -365,14 +328,14 @@ const config = defineConfig({
         "stylelint-plugin-use-baseline", // Enforce CSS features in baseline
         "stylelint-value-no-unknown-custom-properties", // Validate custom properties
 
-        /**
+        /*
          * Browser compatibility and cross-platform plugins.
          */
         // Browser compatibility plugins
         "stylelint-no-browser-hacks", // Disallow browser hacks
         "stylelint-no-unsupported-browser-features", // Check browser support
 
-        /**
+        /*
          * Code organization and maintenance utility plugins.
          */
         // Utility plugins
@@ -381,7 +344,7 @@ const config = defineConfig({
         "stylelint-declaration-strict-value",
         "stylelint-group-selectors",
 
-        /**
+        /*
          * Disabled plugins with documented reasons for exclusion.
          *
          * These plugins are intentionally disabled due to compatibility issues,
@@ -394,7 +357,7 @@ const config = defineConfig({
         // "stylelint-no-indistinguishable-colors", // Disabled: Tailwind intentionally uses subtle color variations for design flexibility, which may reduce strict color distinguishability. Accessibility concerns (e.g., sufficient contrast) should be addressed via design review and dedicated contrast checking tools rather than enforced by this rule.
     ],
 
-    /**
+    /*
      * Controls console output verbosity during linting.
      *
      * When false, shows all rule violations and informational messages. Set to
@@ -406,7 +369,7 @@ const config = defineConfig({
      */
     quiet: false,
 
-    /**
+    /*
      * Reports disable comments that lack a description explaining why the rule
      * was disabled.
      *
@@ -419,7 +382,7 @@ const config = defineConfig({
      */
     reportDescriptionlessDisables: true,
 
-    /**
+    /*
      * Reports disable comments that target rules not applicable to the current
      * context.
      *
@@ -429,7 +392,7 @@ const config = defineConfig({
      */
     reportInvalidScopeDisables: true,
 
-    /**
+    /*
      * Reports disable comments for rules that didn't produce any violations.
      *
      * Helps maintain clean codebase by identifying unnecessary disable comments
@@ -441,7 +404,7 @@ const config = defineConfig({
      */
     reportNeedlessDisables: true,
 
-    /**
+    /*
      * Reports disable comments that don't specify which rule(s) they disable.
      *
      * Encourages specific disable comments over broad disable directives.
@@ -453,7 +416,7 @@ const config = defineConfig({
      */
     reportUnscopedDisables: true,
 
-    /**
+    /*
      * Comprehensive rule configuration defining specific linting behavior.
      *
      * Rules are organized into logical groups for maintainability:
@@ -475,7 +438,7 @@ const config = defineConfig({
      * @see {@link https://stylelint.io/user-guide/rules | Complete Rule List}
      */
     rules: {
-        /**
+        /*
          * Stylistic rules from @stylistic/stylelint-plugin.
          *
          * Most stylistic rules are disabled (set to null) because code
@@ -565,7 +528,7 @@ const config = defineConfig({
         "@stylistic/value-list-comma-space-before": null,
         "@stylistic/value-list-max-empty-lines": null,
 
-        /**
+        /*
          * Accessibility rules from @double-great/stylelint-a11y plugin.
          *
          * These rules help ensure CSS follows WCAG guidelines and inclusive
@@ -583,7 +546,7 @@ const config = defineConfig({
         "a11y/font-size-is-readable": [
             true,
             {
-                /**
+                /*
                  * Configuration for readable font size enforcement.
                  *
                  * Allows smaller font sizes for tooltips and visual indicators
@@ -610,7 +573,7 @@ const config = defineConfig({
         "alpha-value-notation": null,
         "annotation-no-unknown": true,
 
-        /**
+        /*
          * Core Stylelint built-in rules for standard CSS validation.
          *
          * These rules provide fundamental CSS linting including syntax
@@ -686,7 +649,7 @@ const config = defineConfig({
         "declaration-property-value-keyword-no-deprecated": true,
         "declaration-property-value-no-unknown": null,
 
-        /**
+        /*
          * Defensive CSS practices enforcement.
          *
          * `stylelint-plugin-defensive-css` v2+ exposes rules under the
@@ -816,7 +779,7 @@ const config = defineConfig({
         // Plugin rules
         "plugin/declaration-block-no-ignored-properties": true,
 
-        /**
+        /*
          * Browser compatibility rules with specific browser support targets.
          *
          * Configurations target the project's supported browser matrix,
@@ -827,7 +790,7 @@ const config = defineConfig({
         "plugin/no-browser-hacks": [
             true,
             {
-                /**
+                /*
                  * Browser list defining minimum supported versions.
                  *
                  * Matches the project's browserslist configuration to ensure
@@ -841,7 +804,7 @@ const config = defineConfig({
             },
         ],
 
-        /**
+        /*
          * Performance optimization rules for animations and high-impact
          * properties.
          *
@@ -855,7 +818,7 @@ const config = defineConfig({
         "plugin/no-low-performance-animation-properties": [
             true,
             {
-                /**
+                /*
                  * Properties to ignore despite performance implications.
                  *
                  * These properties are commonly animated and their performance
@@ -875,7 +838,7 @@ const config = defineConfig({
             },
         ],
 
-        /**
+        /*
          * Browser feature compatibility validation.
          *
          * Warns about CSS features that may not be supported in the project's
@@ -887,7 +850,7 @@ const config = defineConfig({
         "plugin/no-unsupported-browser-features": [
             true,
             {
-                /**
+                /*
                  * Target browser versions for compatibility checks.
                  *
                  * Aligned with project's browserslist configuration.
@@ -898,7 +861,7 @@ const config = defineConfig({
                     "not dead",
                 ],
 
-                /**
+                /*
                  * Features to ignore despite browser support concerns.
                  *
                  * Empty array allows modern CSS features that may have limited
@@ -906,7 +869,7 @@ const config = defineConfig({
                  */
                 ignore: ["multicolumn"], // Allow modern CSS features
 
-                /**
+                /*
                  * Severity level for unsupported feature detection.
                  *
                  * Set to "warning" to inform about compatibility issues without
@@ -933,7 +896,7 @@ const config = defineConfig({
 
         "rule-selector-property-disallowed-list": null,
 
-        /**
+        /*
          * Scale-based design system rules.
          *
          * Rules from stylelint-scales plugin for enforcing consistent design
@@ -948,7 +911,7 @@ const config = defineConfig({
 
         "scales/border-widths": null,
 
-        /**
+        /*
          * Font size scale configuration.
          *
          * Defines allowed font sizes in both pixel and relative units. Supports
@@ -958,7 +921,7 @@ const config = defineConfig({
         "scales/font-sizes": [
             [
                 {
-                    /**
+                    /*
                      * Pixel-based font size scale.
                      *
                      * Provides precise sizing for components that require exact
@@ -983,7 +946,7 @@ const config = defineConfig({
                     units: ["px"],
                 },
                 {
-                    /**
+                    /*
                      * Relative unit font size scale.
                      *
                      * Uses rem and em units for responsive and accessible
@@ -1013,7 +976,7 @@ const config = defineConfig({
 
         "scales/letter-spacings": null,
 
-        /**
+        /*
          * Line height scale configuration.
          *
          * Defines a scale of line-height values for consistent vertical rhythm
@@ -1034,7 +997,7 @@ const config = defineConfig({
         "scales/sizes": null,
         "scales/space": null,
 
-        /**
+        /*
          * Prettier integration for code formatting.
          *
          * Enables Prettier formatting rules within Stylelint to ensure
@@ -1045,7 +1008,7 @@ const config = defineConfig({
         "scales/word-spacings": null,
         "scales/z-indices": null,
 
-        /**
+        /*
          * SCSS (Sass) specific linting rules.
          *
          * Rules specific to SCSS syntax and features including mixins,
@@ -1100,7 +1063,7 @@ const config = defineConfig({
         "selector-attribute-operator-disallowed-list": null,
         "selector-attribute-quotes": "always",
 
-        /**
+        /*
          * Rule to enforce consistent class selector patterns.
          *
          * Disabled to allow flexibility with utility-first CSS frameworks like
@@ -1126,7 +1089,7 @@ const config = defineConfig({
         "selector-nested-pattern": null,
         "selector-no-deprecated": true,
 
-        /**
+        /*
          * Disallow invalid selectors.
          *
          * Catches syntactically invalid selectors such as `:nth-child(2n+)`,
@@ -1155,7 +1118,7 @@ const config = defineConfig({
         "string-no-newline": true,
         "syntax-string-no-invalid": true,
 
-        /**
+        /*
          * Minimum animation/transition duration.
          *
          * Enforces a minimum of 100ms for animations and transitions to ensure
@@ -1172,7 +1135,7 @@ const config = defineConfig({
         // Replaced by built-in unit-layout-mappings below
         // (was: logical-css/require-logical-units)
 
-        /**
+        /*
          * Logical units enforcement.
          *
          * Requires flow-relative viewport and container units (e.g., `vi`
@@ -1193,7 +1156,7 @@ const config = defineConfig({
         // Replaced by built-in value-keyword-layout-mappings below
         // (was: logical-css/require-logical-keywords)
 
-        /**
+        /*
          * Logical value keywords enforcement.
          *
          * Requires flow-relative value keywords (e.g., `inline-start` instead
@@ -1219,6 +1182,6 @@ const config = defineConfig({
         ],
     },
     // Validate: true, -- Disabled: not real config option only CLI flag
-});
+} satisfies Config;
 
 export default config;

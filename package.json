@@ -33,24 +33,23 @@
     "type": "module",
     "exports": {
         ".": {
-            "types": "./index.d.ts",
-            "import": "./stylelint.config.mjs",
+            "types": "./dist/stylelint.config.d.ts",
+            "import": "./dist/stylelint.config.js",
             "require": null
         },
         "./package.json": "./package.json"
     },
-    "main": "./stylelint.config.mjs",
-    "types": "./index.d.ts",
+    "main": "./dist/stylelint.config.js",
+    "types": "./dist/stylelint.config.d.ts",
     "files": [
-        "index.d.ts",
-        "stylelint.config.d.mts",
-        "stylelint.config.mjs"
+        "dist"
     ],
     "scripts": {
-        "build": "npm run typecheck",
+        "build": "npm run clean:dist && tsc -p tsconfig.build.json",
         "changelog:generate": "git-cliff --config cliff.toml --output CHANGELOG.md",
         "changelog:preview": "git-cliff --config cliff.toml --unreleased",
         "changelog:release-notes": "git-cliff --config cliff.toml --latest --strip all",
+        "clean:dist": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
         "coverage": "vitest run --coverage",
         "lint": "cross-env NODE_OPTIONS=--max_old_space_size=8192 eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
         "lint:all": "npm run lint && npm run typecheck && npm run test && npm run test:stylelint-config && npm run lint:prettier && npm run lint:package && npm run lint:yaml && npm run lint:secretlint",
@@ -74,10 +73,12 @@
         "release:verify": "npm run build && npm run lint:all && npm run lint:package-check",
         "sync:node-version": "node scripts/sync-node-version-files.mjs",
         "sync:peer-stylelint": "node scripts/sync-peer-stylelint-range.mjs",
+        "pretest": "npm run build",
         "test": "vitest run",
         "test:coverage": "npm run coverage",
+        "pretest:stylelint-config": "npm run build",
         "test:stylelint-config": "vitest run test/preset.test.ts",
-        "typecheck": "tsc -p tsconfig.build.json && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.eslint.json --noEmit && tsc -p tsconfig.js.json --noEmit && tsc -p tsconfig.vitest-typecheck.json --noEmit",
+        "typecheck": "npm run build && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.eslint.json --noEmit && tsc -p tsconfig.js.json --noEmit && tsc -p tsconfig.vitest-typecheck.json --noEmit",
         "typecheck:all": "npm run typecheck",
         "types:update": "typesync",
         "update-deps": "npx ncu -i --install never && npm update --force && npm install --force && npm run sync:peer-stylelint && npm run sync:node-version",
@@ -110,7 +111,6 @@
         "stylelint-config-tailwindcss": "^1.0.1",
         "stylelint-declaration-block-no-ignored-properties": "^3.0.0",
         "stylelint-declaration-strict-value": "^1.11.1",
-        "stylelint-define-config": "^17.11.0",
         "stylelint-find-new-rules": "^6.0.0",
         "stylelint-formatter-gitlab-code-quality-report": "^1.1.0",
         "stylelint-formatter-pretty": "^4.0.1",

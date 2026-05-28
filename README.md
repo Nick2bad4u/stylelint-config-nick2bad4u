@@ -56,6 +56,8 @@ export default {
 - Tailwind compatibility
 - Docusaurus CSS support
 - Accessibility, logical CSS, and performance plugins
+- CSS Grid correctness rules via
+  `stylelint-plugin-grid/configs/grid-all`
 - CSS performance budget rules via
   `stylelint-plugin-css-performance-budget/configs/performance-budget-all`
 - Container query correctness rules via
@@ -74,9 +76,11 @@ The shared config includes overrides and parsers for:
 
 ## Package notes
 
-- Package entrypoint: `stylelint.config.mjs`
+- Source config: `src/stylelint.config.ts`
+- Package entrypoint: `dist/stylelint.config.js`
+- Build command: `npm run build`
 - Export style: ESM only
-- Peer dependency: `stylelint@^17.9.1`
+- Peer dependency: `stylelint@^17.9.1 || ^17.12.0`
 
 ## Development checks
 

@@ -103,7 +103,7 @@
         "test/fixtures/**"
     ],
     "include": [
-        "index.d.ts",
+        "src/**/*.ts",
         "test/**/*.d.ts",
         "test/**/*.ts",
         "vite.config.ts"
