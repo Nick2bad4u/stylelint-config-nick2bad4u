@@ -110,6 +110,7 @@ const config = defineConfig({
      * - SCSS-specific enhancements
      * - Tailwind CSS compatibility
      * - Docusaurus-specific rule pack
+     * - Grid correctness and layout safety checks
      * - Container query sanity checks
      * - CSS performance budget enforcement
      *
@@ -122,6 +123,7 @@ const config = defineConfig({
         "stylelint-config-standard-scss",
         "stylelint-plugin-docusaurus/configs/docusaurus-all",
         "stylelint-plugin-font/configs/font-all",
+        "stylelint-plugin-grid/configs/grid-all",
         "stylelint-plugin-css-performance-budget/configs/performance-budget-all",
         "stylelint-plugin-container-query-sanity/configs/container-query-all",
         "stylelint-config-tailwindcss",

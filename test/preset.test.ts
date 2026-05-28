@@ -21,6 +21,7 @@ describe("stylelint-config-nick2bad4u preset", () => {
             "stylelint-config-standard-scss",
             "stylelint-plugin-docusaurus/configs/docusaurus-all",
             "stylelint-plugin-font/configs/font-all",
+            "stylelint-plugin-grid/configs/grid-all",
             "stylelint-plugin-css-performance-budget/configs/performance-budget-all",
             "stylelint-plugin-container-query-sanity/configs/container-query-all",
             "stylelint-config-tailwindcss",
@@ -37,7 +38,7 @@ describe("stylelint-config-nick2bad4u preset", () => {
     });
 
     it("includes baseline and plugin all presets", () => {
-        expect.assertions(7);
+        expect.assertions(9);
 
         expect(sharedConfig.extends).toContain("stylelint-config-standard");
         expect(sharedConfig.extends).toContain(
@@ -45,10 +46,16 @@ describe("stylelint-config-nick2bad4u preset", () => {
         );
         expect(sharedConfig.extends).toContain("stylelint-config-tailwindcss");
         expect(sharedConfig.extends).toContain(
+            "stylelint-plugin-grid/configs/grid-all"
+        );
+        expect(sharedConfig.extends).toContain(
             "stylelint-plugin-css-performance-budget/configs/performance-budget-all"
         );
         expect(sharedConfig.extends).toContain(
             "stylelint-plugin-container-query-sanity/configs/container-query-all"
+        );
+        expect(sharedConfig.extends).not.toContain(
+            "stylelint-plugin-grid/configs/grid-recommended"
         );
         expect(sharedConfig.extends).not.toContain(
             "stylelint-plugin-css-performance-budget/configs/performance-budget-recommended"
