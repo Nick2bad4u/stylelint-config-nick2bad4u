@@ -3,8 +3,8 @@ name: Feature request
 about: Suggest a new rule or improvement for stylelint-config-nick2bad4u
 title: "Feature: "
 labels:
-    - enhancement
-    - triage
+ - enhancement
+ - triage
 assignees: []
 ---
 

@@ -22,7 +22,7 @@ Use it as an extended shared config in your project `.stylelintrc.*`:
 
 ```json
 {
-    "extends": ["stylelint-config-nick2bad4u"]
+ "extends": ["stylelint-config-nick2bad4u"]
 }
 ```
 
@@ -41,11 +41,11 @@ this:
 import sharedConfig from "stylelint-config-nick2bad4u";
 
 export default {
-    ...sharedConfig,
-    rules: {
-        ...sharedConfig.rules,
-        "declaration-no-important": null,
-    },
+ ...sharedConfig,
+ rules: {
+  ...sharedConfig.rules,
+  "declaration-no-important": null,
+ },
 };
 ```
 

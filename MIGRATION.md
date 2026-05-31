@@ -1,4 +1,3 @@
-
 # Stylelint Migration Guide
 
 > **PowerShell migration recipe** — run these steps in each package.
@@ -80,7 +79,6 @@ npx stylelint "**/*.{css,scss,sass}" --allow-empty-input
 ---
 
 If you want, I can also give you a **monorepo loop version** that runs this across every workspace package automatically.
-
 
 ```powershell
 # --- Stylelint Migration: One‑Shot Script ---
