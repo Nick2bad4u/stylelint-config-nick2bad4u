@@ -12,7 +12,7 @@ describe("stylelint-config-nick2bad4u preset", () => {
     });
 
     it("contains the expected top-level stylelint sections", () => {
-        expect.assertions(4);
+        expect.assertions(5);
 
         expect(sourceConfig.extends).toStrictEqual([
             "stylelint-config-standard",
@@ -27,7 +27,13 @@ describe("stylelint-config-nick2bad4u preset", () => {
             "stylelint-config-tailwindcss",
         ]);
         expect(sourceConfig.plugins).toHaveLength(18);
-        expect(sourceConfig.overrides).toHaveLength(6);
+        expect(sourceConfig.overrides).toHaveLength(7);
+        expect(sourceConfig.overrides).toContainEqual(
+            expect.objectContaining({
+                extends: ["stylelint-config-recommended-vue"],
+                files: ["*.vue", "**/*.vue"],
+            })
+        );
         expect(sourceConfig.rules).toHaveProperty("prettier/prettier", true);
     });
 
@@ -90,5 +96,74 @@ describe("stylelint-config-nick2bad4u preset", () => {
 
         expect(lintResult.results).toHaveLength(1);
         expect(unknownRuleWarnings).toHaveLength(0);
+    });
+
+    it("parses Vue single-file components without treating script setup as CSS", async () => {
+        expect.assertions(3);
+
+        const lintResult = await stylelint.lint({
+            code: `
+<script setup lang="ts">
+const message = "hello";
+</script>
+
+<style>
+.button {
+    color: oklch(60% 0.15 240);
+}
+</style>
+`,
+            codeFilename: "Component.vue",
+            config: sourceConfig,
+        });
+
+        const allParseErrors = lintResult.results.flatMap(
+            (result) => result.parseErrors
+        );
+        const unknownWordWarnings = lintResult.results
+            .flatMap((result) => result.warnings)
+            .filter((warning) => warning.text.includes("Unknown word"));
+
+        expect(lintResult.results).toHaveLength(1);
+        expect(allParseErrors).toHaveLength(0);
+        expect(unknownWordWarnings).toHaveLength(0);
+    });
+
+    it("allows Vue-specific style syntax in single-file components", async () => {
+        expect.assertions(3);
+
+        const lintResult = await stylelint.lint({
+            code: `
+<template>
+    <div class="card"></div>
+</template>
+
+<style>
+.card :deep(.child) {
+    color: v-bind(themeColor);
+}
+</style>
+`,
+            codeFilename: "Component.vue",
+            config: sourceConfig,
+        });
+
+        const allParseErrors = lintResult.results.flatMap(
+            (result) => result.parseErrors
+        );
+        const vueSyntaxWarnings = lintResult.results
+            .flatMap((result) => result.warnings)
+            .filter((warning) =>
+                [
+                    "function-no-unknown",
+                    "scss/function-no-unknown",
+                    "selector-pseudo-class-no-unknown",
+                    "value-keyword-case",
+                ].includes(warning.rule)
+            );
+
+        expect(lintResult.results).toHaveLength(1);
+        expect(allParseErrors).toHaveLength(0);
+        expect(vueSyntaxWarnings).toHaveLength(0);
     });
 });

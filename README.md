@@ -62,6 +62,8 @@ export default {
   `stylelint-plugin-css-performance-budget/configs/performance-budget-all`
 - Container query correctness rules via
   `stylelint-plugin-container-query-sanity/configs/container-query-all`
+- Vue single-file component parsing and Vue-specific CSS syntax support via
+  `stylelint-config-recommended-vue`
 
 ## Supported syntax surfaces
 
@@ -70,6 +72,7 @@ The shared config includes overrides and parsers for:
 - plain CSS
 - SCSS / Sass
 - HTML with inline styles
+- Vue single-file components
 - CSS-in-JS in JS / TS / JSX / TSX
 - styled-jsx
 - CSS Modules

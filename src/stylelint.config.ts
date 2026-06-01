@@ -10,6 +10,7 @@
  * syntax variations:
  *
  * - HTML files with inline CSS
+ * - Vue single-file components
  * - TypeScript/JavaScript React components with CSS-in-JS
  * - Styled JSX components
  * - CSS Modules with scoped class names
@@ -76,6 +77,7 @@ const config: Config = {
      * - Grid correctness and layout safety checks
      * - Container query sanity checks
      * - CSS performance budget enforcement
+     * - Vue single-file component parsing and Vue-specific CSS syntax
      *
      * @see {@link https://stylelint.io/user-guide/configure/#extends | extends Documentation}
      */
@@ -147,6 +149,62 @@ const config: Config = {
                 "max-nesting-depth": null,
                 "selector-max-id": null,
                 "selector-max-specificity": null,
+            },
+        },
+        {
+            /*
+             * Configuration for Vue single-file components.
+             *
+             * Applies Vue-aware parser and rule adjustments after this config's
+             * stricter global rules so normal Vue selectors and v-bind()
+             * stylesheet syntax do not produce false positives.
+             */
+            // Vue single-file components
+            extends: ["stylelint-config-recommended-vue"],
+            files: ["*.vue", "**/*.vue"],
+            rules: {
+                "declaration-property-value-no-unknown": [
+                    true,
+                    {
+                        ignoreProperties: {
+                            "/.*/": "/v-bind[(].+[)]/",
+                        },
+                    },
+                ],
+                "function-no-unknown": [
+                    true,
+                    {
+                        ignoreFunctions: ["v-bind"],
+                    },
+                ],
+                "scss/at-function-named-arguments": null,
+                "scss/function-no-unknown": null,
+                "selector-pseudo-class-no-unknown": [
+                    true,
+                    {
+                        ignorePseudoClasses: [
+                            "deep",
+                            "global",
+                            "slotted",
+                        ],
+                    },
+                ],
+                "selector-pseudo-element-no-unknown": [
+                    true,
+                    {
+                        ignorePseudoElements: [
+                            "v-deep",
+                            "v-global",
+                            "v-slotted",
+                        ],
+                    },
+                ],
+                "value-keyword-case": [
+                    "lower",
+                    {
+                        ignoreFunctions: ["v-bind"],
+                    },
+                ],
             },
         },
         {

@@ -102,9 +102,9 @@
         "stylelint-codeframe-formatter": "^1.2.0",
         "stylelint-config-alphabetical-order": "^2.0.0",
         "stylelint-config-idiomatic-order": "^10.0.0",
-        "stylelint-config-inspector": "^2.3.2",
         "stylelint-config-recess-order": "^7.7.0",
         "stylelint-config-recommended": "^18.0.0",
+        "stylelint-config-recommended-vue": "^1.6.1",
         "stylelint-config-sass-guidelines": "^13.0.0",
         "stylelint-config-standard": "^40.0.0",
         "stylelint-config-standard-scss": "^17.0.0",
@@ -137,10 +137,10 @@
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.3",
         "@types/node": "^25.9.1",
-        "@vitest/coverage-v8": "^4.1.7",
+        "@vitest/coverage-v8": "^4.1.8",
         "cross-env": "^10.1.0",
         "eslint": "^10.4.1",
-        "eslint-config-nick2bad4u": "^1.2.4",
+        "eslint-config-nick2bad4u": "^1.2.6",
         "git-cliff": "^2.13.1",
         "npm-package-json-lint": "^10.4.0",
         "picocolors": "^1.1.1",
@@ -148,12 +148,13 @@
         "prettier-config-nick2bad4u": "^1.0.13",
         "publint": "^0.3.21",
         "secretlint": "^13.0.2",
-        "secretlint-config-nick2bad4u": "^1.0.5",
+        "secretlint-config-nick2bad4u": "^1.1.0",
         "sort-package-json": "^3.6.1",
         "stylelint": "^17.12.0",
+        "stylelint-config-inspector": "^2.3.3",
         "typescript": "^6.0.3",
-        "vite": "^8.0.14",
-        "vitest": "^4.1.7"
+        "vite": "^8.0.16",
+        "vitest": "^4.1.8"
     },
     "peerDependencies": {
         "stylelint": "^17.9.1 || ^17.12.0"
