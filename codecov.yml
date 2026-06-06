@@ -1,15 +1,15 @@
 # yaml-language-server: $schema=https://www.schemastore.org/codecov.json
 
 codecov:
-    branch: main
+    branch: "main"
     max_report_age: "24h"
     notify:
         wait_for_ci: true
     require_ci_to_pass: true
-    slug: Nick2bad4u/stylelint-config-nick2bad4u
+    slug: "Nick2bad4u/stylelint-config-nick2bad4u"
 
 comment:
-    behavior: default
+    behavior: "default"
     layout: "header, diff, flags, files, footer"
     require_base: false
     require_changes: false
@@ -18,44 +18,44 @@ comment:
 component_management:
     default_rules:
         statuses:
-            - target: auto
-              threshold: 2%
-              type: project
+            - target: "auto"
+              threshold: "2%"
+              type: "project"
     individual_components:
-        - component_id: package_entry
+        - component_id: "package_entry"
           name: "Package entrypoint"
           paths:
-              - stylelint.config.mjs
+              - "stylelint.config.mjs"
 
 coverage:
     precision: 2
     range: "60...100"
-    round: down
+    round: "down"
     status:
         patch:
             default:
-                target: 80%
-                threshold: 2%
+                target: "80%"
+                threshold: "2%"
         project:
             default:
-                target: auto
-                threshold: 2%
+                target: "auto"
+                threshold: "2%"
 
 flags:
     os-linux:
         carryforward: true
         paths:
-            - stylelint.config.mjs
+            - "stylelint.config.mjs"
 
     os-macos:
         carryforward: true
         paths:
-            - stylelint.config.mjs
+            - "stylelint.config.mjs"
 
     os-windows:
         carryforward: true
         paths:
-            - stylelint.config.mjs
+            - "stylelint.config.mjs"
 
 ignore:
     - "benchmarks/**"

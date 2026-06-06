@@ -84,6 +84,69 @@ const resolvePeerFloorRange = (existingPeerRange) => {
 };
 
 /**
+ * Parse the repository's supported caret semver range shape.
+ *
+ * @param {string} range
+ *
+ * @returns {{ major: number; minor: number; patch: number } | null}
+ */
+const parseCaretRange = (range) => {
+    const match = /^\^(\d+)\.(\d+)\.(\d+)$/v.exec(range.trim());
+
+    if (match === null) {
+        return null;
+    }
+
+    const [
+        ,
+        major,
+        minor,
+        patch,
+    ] = match;
+
+    if (major === undefined || minor === undefined || patch === undefined) {
+        return null;
+    }
+
+    return {
+        major: Number(major),
+        minor: Number(minor),
+        patch: Number(patch),
+    };
+};
+
+/**
+ * Check whether a caret floor range already covers a candidate caret range.
+ *
+ * This intentionally handles only normal package major ranges (`^17.x.y`).
+ * Stylelint's major is non-zero, so caret ranges share the same upper bound
+ * when their majors match.
+ *
+ * @param {string} floorRange
+ * @param {string} candidateRange
+ *
+ * @returns {boolean}
+ */
+const isCaretRangeCovered = (floorRange, candidateRange) => {
+    const floor = parseCaretRange(floorRange);
+    const candidate = parseCaretRange(candidateRange);
+
+    if (floor === null || candidate === null || floor.major === 0) {
+        return false;
+    }
+
+    if (floor.major !== candidate.major) {
+        return false;
+    }
+
+    if (floor.minor !== candidate.minor) {
+        return floor.minor < candidate.minor;
+    }
+
+    return floor.patch <= candidate.patch;
+};
+
+/**
  * Narrow an unknown value to a non-null object record.
  *
  * @param {unknown} value
@@ -126,12 +189,14 @@ const main = async () => {
 
     const peerFloorRange = resolvePeerFloorRange(peerDependencies["stylelint"]);
 
-    // When the floor and dev range are identical, emit a single-segment range
-    // to avoid a redundant `^x || ^x` expression.
-    const nextPeerStylelintRange =
-        peerFloorRange === devStylelintRange
-            ? devStylelintRange
-            : `${peerFloorRange} || ${devStylelintRange}`;
+    // When the floor already covers the dev range, emit a single-segment range
+    // to avoid redundant `^17.9.1 || ^17.13.0` expressions.
+    const nextPeerStylelintRange = isCaretRangeCovered(
+        peerFloorRange,
+        devStylelintRange
+    )
+        ? peerFloorRange
+        : `${peerFloorRange} || ${devStylelintRange}`;
 
     if (peerDependencies["stylelint"] === nextPeerStylelintRange) {
         console.log(

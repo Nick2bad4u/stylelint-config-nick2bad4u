@@ -14,7 +14,7 @@
  * - TypeScript/JavaScript React components with CSS-in-JS
  * - Styled JSX components
  * - CSS Modules with scoped class names
- * - SCSS/Sass files with full preprocessing support
+ * - SCSS files with preprocessing support
  *
  * @public
  *
@@ -260,7 +260,7 @@ const config: Config = {
              * that would otherwise conflict with generated class names.
              */
             // CSS modules
-            files: ["**/*.module.{css,scss,sass}"],
+            files: ["**/*.module.{css,scss}"],
             rules: {
                 // CSS modules have local scope, so relax some global rules
                 "selector-class-pattern": null,
@@ -320,7 +320,7 @@ const config: Config = {
         },
         {
             /*
-             * Configuration for SCSS/Sass preprocessor files.
+             * Configuration for SCSS preprocessor files.
              *
              * Uses postcss-scss parser to handle SCSS syntax including
              * variables, mixins, functions, and nesting. Enables SCSS-specific
@@ -328,7 +328,7 @@ const config: Config = {
              */
             // SCSS files
             customSyntax: "postcss-scss",
-            files: ["**/*.{scss,sass}"],
+            files: ["**/*.scss"],
             rules: {
                 // SCSS specific rules
                 "at-rule-no-unknown": null,
@@ -483,7 +483,7 @@ const config: Config = {
      * - Accessibility rules (a11y) - WCAG compliance and inclusive design
      * - Core Stylelint rules - Standard CSS validation and best practices
      * - Plugin-specific rules - Extended functionality from third-party plugins
-     * - SCSS rules (scss/) - Sass/SCSS preprocessing support
+     * - SCSS rules (scss/) - SCSS preprocessing support
      *
      * Each rule can be:
      *
@@ -1067,7 +1067,7 @@ const config: Config = {
         "scales/z-indices": null,
 
         /*
-         * SCSS (Sass) specific linting rules.
+         * SCSS specific linting rules.
          *
          * Rules specific to SCSS syntax and features including mixins,
          * functions, variables, and preprocessing directives. These rules

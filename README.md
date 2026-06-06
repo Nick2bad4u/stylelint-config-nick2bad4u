@@ -70,7 +70,7 @@ export default {
 The shared config includes overrides and parsers for:
 
 - plain CSS
-- SCSS / Sass
+- SCSS
 - HTML with inline styles
 - Vue single-file components
 - CSS-in-JS in JS / TS / JSX / TSX
@@ -83,7 +83,7 @@ The shared config includes overrides and parsers for:
 - Package entrypoint: `dist/stylelint.config.js`
 - Build command: `npm run build`
 - Export style: ESM only
-- Peer dependency: `stylelint@^17.9.1 || ^17.12.0`
+- Peer dependency: `stylelint@^17.9.1`
 
 ## Development checks
 

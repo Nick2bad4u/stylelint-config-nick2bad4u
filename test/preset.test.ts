@@ -79,6 +79,20 @@ describe("stylelint-config-nick2bad4u preset", () => {
         );
     });
 
+    it("routes only SCSS files through the SCSS syntax parser", () => {
+        expect.assertions(1);
+
+        const scssOverride = sourceConfig.overrides?.find(
+            (override) => override.customSyntax === "postcss-scss"
+        );
+
+        expect(scssOverride).toStrictEqual(
+            expect.objectContaining({
+                files: ["**/*.scss"],
+            })
+        );
+    });
+
     it("does not contain unknown Stylelint rules", async () => {
         expect.assertions(2);
 

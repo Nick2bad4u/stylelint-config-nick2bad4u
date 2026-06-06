@@ -14,13 +14,60 @@ $depNames = @()
 if ($pkg.dependencies)    { $depNames += $pkg.dependencies.PSObject.Properties.Name }
 if ($pkg.devDependencies) { $depNames += $pkg.devDependencies.PSObject.Properties.Name }
 
-# Anything this shared config already bundles/manages
-$managedRegex = '^(stylelint($|-)|@stylistic/stylelint-plugin$|@stylelint-types/stylelint-(order|stylistic)$|@double-great/stylelint-a11y$|postcss-(html|scss|styled-jsx|styled-syntax)$)'
+# Packages this shared config already bundles/manages.
+# Keep this list aligned with package.json dependencies.
+$managedPackageNames = @(
+  "@csstools/stylelint-formatter-github",
+  "@double-great/stylelint-a11y",
+  "@stylelint-types/stylelint-order",
+  "@stylelint-types/stylelint-stylistic",
+  "@stylistic/stylelint-plugin",
+  "postcss-html",
+  "postcss-scss",
+  "postcss-styled-jsx",
+  "postcss-styled-syntax",
+  "postcss-syntax",
+  "stylelint-checkstyle-formatter",
+  "stylelint-codeframe-formatter",
+  "stylelint-config-alphabetical-order",
+  "stylelint-config-idiomatic-order",
+  "stylelint-config-recess-order",
+  "stylelint-config-recommended",
+  "stylelint-config-recommended-vue",
+  "stylelint-config-sass-guidelines",
+  "stylelint-config-standard",
+  "stylelint-config-standard-scss",
+  "stylelint-config-tailwindcss",
+  "stylelint-declaration-block-no-ignored-properties",
+  "stylelint-declaration-strict-value",
+  "stylelint-find-new-rules",
+  "stylelint-formatter-gitlab-code-quality-report",
+  "stylelint-formatter-pretty",
+  "stylelint-gamut",
+  "stylelint-group-selectors",
+  "stylelint-high-performance-animation",
+  "stylelint-media-use-custom-media",
+  "stylelint-no-browser-hacks",
+  "stylelint-no-unsupported-browser-features",
+  "stylelint-order",
+  "stylelint-plugin-container-query-sanity",
+  "stylelint-plugin-css-performance-budget",
+  "stylelint-plugin-defensive-css",
+  "stylelint-plugin-docusaurus",
+  "stylelint-plugin-font",
+  "stylelint-plugin-grid",
+  "stylelint-plugin-use-baseline",
+  "stylelint-prettier",
+  "stylelint-scales",
+  "stylelint-scss",
+  "stylelint-use-nesting",
+  "stylelint-value-no-unknown-custom-properties"
+)
 
 $toRemove = $depNames |
   Sort-Object -Unique |
   Where-Object {
-    $_ -match $managedRegex -and
+    $managedPackageNames -contains $_ -and
     $_ -ne 'stylelint-config-nick2bad4u' -and
     $_ -ne 'stylelint'
   }
@@ -73,7 +120,7 @@ Get-ChildItem -Force -Name .stylelintrc* | ForEach-Object { Remove-Item $_ -Forc
 ## 4. Quick verify
 
 ```powershell
-npx stylelint "**/*.{css,scss,sass}" --allow-empty-input
+npx stylelint "**/*.{css,scss}" --allow-empty-input
 ```
 
 ---
@@ -95,12 +142,58 @@ $depNames = @()
 if ($pkg.dependencies)    { $depNames += $pkg.dependencies.PSObject.Properties.Name }
 if ($pkg.devDependencies) { $depNames += $pkg.devDependencies.PSObject.Properties.Name }
 
-$managedRegex = '^(stylelint($|-)|@stylistic/stylelint-plugin$|@stylelint-types/stylelint-(order|stylistic)$|@double-great/stylelint-a11y$|postcss-(html|scss|styled-jsx|styled-syntax)$)'
+$managedPackageNames = @(
+  "@csstools/stylelint-formatter-github",
+  "@double-great/stylelint-a11y",
+  "@stylelint-types/stylelint-order",
+  "@stylelint-types/stylelint-stylistic",
+  "@stylistic/stylelint-plugin",
+  "postcss-html",
+  "postcss-scss",
+  "postcss-styled-jsx",
+  "postcss-styled-syntax",
+  "postcss-syntax",
+  "stylelint-checkstyle-formatter",
+  "stylelint-codeframe-formatter",
+  "stylelint-config-alphabetical-order",
+  "stylelint-config-idiomatic-order",
+  "stylelint-config-recess-order",
+  "stylelint-config-recommended",
+  "stylelint-config-recommended-vue",
+  "stylelint-config-sass-guidelines",
+  "stylelint-config-standard",
+  "stylelint-config-standard-scss",
+  "stylelint-config-tailwindcss",
+  "stylelint-declaration-block-no-ignored-properties",
+  "stylelint-declaration-strict-value",
+  "stylelint-find-new-rules",
+  "stylelint-formatter-gitlab-code-quality-report",
+  "stylelint-formatter-pretty",
+  "stylelint-gamut",
+  "stylelint-group-selectors",
+  "stylelint-high-performance-animation",
+  "stylelint-media-use-custom-media",
+  "stylelint-no-browser-hacks",
+  "stylelint-no-unsupported-browser-features",
+  "stylelint-order",
+  "stylelint-plugin-container-query-sanity",
+  "stylelint-plugin-css-performance-budget",
+  "stylelint-plugin-defensive-css",
+  "stylelint-plugin-docusaurus",
+  "stylelint-plugin-font",
+  "stylelint-plugin-grid",
+  "stylelint-plugin-use-baseline",
+  "stylelint-prettier",
+  "stylelint-scales",
+  "stylelint-scss",
+  "stylelint-use-nesting",
+  "stylelint-value-no-unknown-custom-properties"
+)
 
 $toRemove = $depNames |
   Sort-Object -Unique |
   Where-Object {
-    $_ -match $managedRegex -and
+    $managedPackageNames -contains $_ -and
     $_ -ne 'stylelint-config-nick2bad4u' -and
     $_ -ne 'stylelint'
   }
@@ -141,7 +234,7 @@ Get-ChildItem -Force -Name .stylelintrc* | ForEach-Object {
 
 # 5) Verify
 Write-Host "🔍 Running Stylelint check..."
-npx stylelint "**/*.{css,scss,sass}" --allow-empty-input
+npx stylelint "**/*.{css,scss}" --allow-empty-input
 
 Write-Host "`n🎉 Stylelint migration complete!" -ForegroundColor Green
 ```
