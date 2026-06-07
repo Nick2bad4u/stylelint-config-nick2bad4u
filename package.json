@@ -85,9 +85,6 @@
         "update-deps": "npx ncu -i --install never && npm update --force && npm install --force && npm run sync:peer-stylelint && npm run sync:node-version:check",
         "verify": "npm run release:verify"
     },
-    "overrides": {
-        "fflate": "0.8.2"
-    },
     "dependencies": {
         "@csstools/stylelint-formatter-github": "^2.0.0",
         "@double-great/stylelint-a11y": "^3.4.14",
