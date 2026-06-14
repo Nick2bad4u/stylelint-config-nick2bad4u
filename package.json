@@ -83,7 +83,8 @@
         "typecheck:all": "npm run typecheck",
         "types:update": "typesync",
         "update-deps": "npx ncu -i --install never && npm update --force && npm install --force && npm run sync:peer-stylelint && npm run sync:node-version:check",
-        "verify": "npm run release:verify"
+        "verify": "npm run release:verify",
+        "update-actions": "npx actions-up --yes --style sha"
     },
     "dependencies": {
         "@csstools/stylelint-formatter-github": "^2.0.0",
