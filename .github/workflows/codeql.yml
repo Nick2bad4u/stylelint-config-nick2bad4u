@@ -1,4 +1,3 @@
-# eslint-disable github-actions/pin-action-shas, github-actions/prefer-step-uses-style -- Bootstrap CodeQL intentionally follows official action release tags.
 name: "Codeql Analysis"
 run-name: "Codeql Analysis - ${{ github.ref_name }}"
 

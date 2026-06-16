@@ -10,7 +10,7 @@
  * syntax variations:
  *
  * - HTML files with inline CSS
- * - Vue single-file components
+ * - Vue.js single-file components
  * - TypeScript/JavaScript React components with CSS-in-JS
  * - Styled JSX components
  * - CSS Modules with scoped class names
@@ -77,7 +77,7 @@ const config: Config = {
      * - Grid correctness and layout safety checks
      * - Container query sanity checks
      * - CSS performance budget enforcement
-     * - Vue single-file component parsing and Vue-specific CSS syntax
+     * - Vue.js single-file component parsing and Vue.js-specific CSS syntax
      *
      * @see {@link https://stylelint.io/user-guide/configure/#extends | extends Documentation}
      */
@@ -153,13 +153,13 @@ const config: Config = {
         },
         {
             /*
-             * Configuration for Vue single-file components.
+             * Configuration for Vue.js single-file components.
              *
              * Applies Vue-aware parser and rule adjustments after this config's
-             * stricter global rules so normal Vue selectors and v-bind()
+             * stricter global rules so normal Vue.js selectors and v-bind()
              * stylesheet syntax do not produce false positives.
              */
-            // Vue single-file components
+            // Vue.js single-file components
             extends: ["stylelint-config-recommended-vue"],
             files: ["*.vue", "**/*.vue"],
             rules: {
@@ -974,7 +974,7 @@ const config: Config = {
          *
          * Defines allowed font sizes in both pixel and relative units. Supports
          * a modular scale approach for consistent typography throughout the
-         * application.
+         * app.
          */
         "scales/font-sizes": [
             [
