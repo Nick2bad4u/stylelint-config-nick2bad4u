@@ -19,3 +19,5 @@ Thumbs.db
 !.vscode/settings.json
 .vscode/
 .stylelintcache
+.lychee.report.md
+.lycheecache
