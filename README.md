@@ -95,4 +95,4 @@ npm run coverage
 npm run release:verify
 ```
 
-For maintainers, see [MAINTAINER_GUIDE.md](./MAINTAINER_GUIDE.md).
+For maintainers, see [MAINTAINER\_GUIDE.md](./MAINTAINER_GUIDE.md).

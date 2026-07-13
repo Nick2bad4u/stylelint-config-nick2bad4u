@@ -1,4 +1,4 @@
-## Repository conversion notes
+# Repository conversion notes
 
 This repository was converted from an ESLint-config template into a dedicated
 shared Stylelint config package.
