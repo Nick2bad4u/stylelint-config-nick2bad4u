@@ -84,7 +84,6 @@ const config: Config = {
     extends: [
         "stylelint-config-standard",
         "stylelint-config-recess-order",
-        "stylelint-config-idiomatic-order",
         "stylelint-config-standard-scss",
         "stylelint-plugin-docusaurus/configs/docusaurus-all",
         "stylelint-plugin-font/configs/font-all",
@@ -160,7 +159,7 @@ const config: Config = {
              * stylesheet syntax do not produce false positives.
              */
             // Vue.js single-file components
-            extends: ["stylelint-config-recommended-vue"],
+            customSyntax: "postcss-html",
             files: ["*.vue", "**/*.vue"],
             rules: {
                 "declaration-property-value-no-unknown": [

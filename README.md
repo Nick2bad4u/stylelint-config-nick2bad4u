@@ -63,7 +63,7 @@ export default {
 - Container query correctness rules via
   `stylelint-plugin-container-query-sanity/configs/container-query-all`
 - Vue single-file component parsing and Vue-specific CSS syntax support via
-  `stylelint-config-recommended-vue`
+  `postcss-html` and targeted Vue rule overrides
 
 ## Supported syntax surfaces
 

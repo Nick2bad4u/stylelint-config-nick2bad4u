@@ -17,32 +17,18 @@ if ($pkg.devDependencies) { $depNames += $pkg.devDependencies.PSObject.Propertie
 # Packages this shared config already bundles/manages.
 # Keep this list aligned with package.json dependencies.
 $managedPackageNames = @(
-  "@csstools/stylelint-formatter-github",
   "@double-great/stylelint-a11y",
-  "@stylelint-types/stylelint-order",
-  "@stylelint-types/stylelint-stylistic",
   "@stylistic/stylelint-plugin",
   "postcss-html",
   "postcss-scss",
   "postcss-styled-jsx",
   "postcss-styled-syntax",
-  "postcss-syntax",
-  "stylelint-checkstyle-formatter",
-  "stylelint-codeframe-formatter",
-  "stylelint-config-alphabetical-order",
-  "stylelint-config-idiomatic-order",
   "stylelint-config-recess-order",
-  "stylelint-config-recommended",
-  "stylelint-config-recommended-vue",
-  "stylelint-config-sass-guidelines",
   "stylelint-config-standard",
   "stylelint-config-standard-scss",
   "stylelint-config-tailwindcss",
   "stylelint-declaration-block-no-ignored-properties",
   "stylelint-declaration-strict-value",
-  "stylelint-find-new-rules",
-  "stylelint-formatter-gitlab-code-quality-report",
-  "stylelint-formatter-pretty",
   "stylelint-gamut",
   "stylelint-group-selectors",
   "stylelint-high-performance-animation",
@@ -73,7 +59,7 @@ $toRemove = $depNames |
   }
 
 if ($toRemove.Count -gt 0) {
-  npm uninstall $toRemove --force
+  npm uninstall $toRemove
   Write-Host "Removed:" ($toRemove -join ', ')
 } else {
   Write-Host "No managed stylelint deps found to remove."
@@ -85,7 +71,7 @@ if ($toRemove.Count -gt 0) {
 ## 2. Install the shared config package (and peer stylelint)
 
 ```powershell
-npm install --save-dev stylelint-config-nick2bad4u stylelint --force
+npm install --save-dev stylelint-config-nick2bad4u stylelint
 ```
 
 ---
@@ -143,32 +129,18 @@ if ($pkg.dependencies)    { $depNames += $pkg.dependencies.PSObject.Properties.N
 if ($pkg.devDependencies) { $depNames += $pkg.devDependencies.PSObject.Properties.Name }
 
 $managedPackageNames = @(
-  "@csstools/stylelint-formatter-github",
   "@double-great/stylelint-a11y",
-  "@stylelint-types/stylelint-order",
-  "@stylelint-types/stylelint-stylistic",
   "@stylistic/stylelint-plugin",
   "postcss-html",
   "postcss-scss",
   "postcss-styled-jsx",
   "postcss-styled-syntax",
-  "postcss-syntax",
-  "stylelint-checkstyle-formatter",
-  "stylelint-codeframe-formatter",
-  "stylelint-config-alphabetical-order",
-  "stylelint-config-idiomatic-order",
   "stylelint-config-recess-order",
-  "stylelint-config-recommended",
-  "stylelint-config-recommended-vue",
-  "stylelint-config-sass-guidelines",
   "stylelint-config-standard",
   "stylelint-config-standard-scss",
   "stylelint-config-tailwindcss",
   "stylelint-declaration-block-no-ignored-properties",
   "stylelint-declaration-strict-value",
-  "stylelint-find-new-rules",
-  "stylelint-formatter-gitlab-code-quality-report",
-  "stylelint-formatter-pretty",
   "stylelint-gamut",
   "stylelint-group-selectors",
   "stylelint-high-performance-animation",
@@ -200,14 +172,14 @@ $toRemove = $depNames |
 
 if ($toRemove.Count -gt 0) {
   Write-Host "🗑️ Removing managed stylelint deps: $($toRemove -join ', ')"
-  npm uninstall $toRemove --force
+  npm uninstall $toRemove
 } else {
   Write-Host "✔️ No managed stylelint deps found to remove."
 }
 
 # 2) Install shared config + peer stylelint
 Write-Host "📥 Installing stylelint-config-nick2bad4u + stylelint..."
-npm install --save-dev stylelint-config-nick2bad4u stylelint --force
+npm install --save-dev stylelint-config-nick2bad4u stylelint
 
 # 3) Write new stylelint.config.mjs using shared config import
 Write-Host "📝 Writing stylelint.config.mjs..."

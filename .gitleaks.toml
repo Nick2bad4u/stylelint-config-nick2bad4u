@@ -65,7 +65,7 @@ title     = "stylelint-config-nick2bad4u Secret Detection Configuration"
     [[rules.allowlists]]
         description = "Allow development and test values"
         regexTarget = "secret"
-        regexes = [
+        regexes     = [
             '''(?i)(development|dev|test|local|localhost|example|demo|placeholder)''',
             '''^(true|false|1|0|yes|no|enabled|disabled)$'''
         ]

@@ -17,7 +17,6 @@ describe("stylelint-config-nick2bad4u preset", () => {
         expect(sourceConfig.extends).toStrictEqual([
             "stylelint-config-standard",
             "stylelint-config-recess-order",
-            "stylelint-config-idiomatic-order",
             "stylelint-config-standard-scss",
             "stylelint-plugin-docusaurus/configs/docusaurus-all",
             "stylelint-plugin-font/configs/font-all",
@@ -30,7 +29,7 @@ describe("stylelint-config-nick2bad4u preset", () => {
         expect(sourceConfig.overrides).toHaveLength(7);
         expect(sourceConfig.overrides).toContainEqual(
             expect.objectContaining({
-                extends: ["stylelint-config-recommended-vue"],
+                customSyntax: "postcss-html",
                 files: ["*.vue", "**/*.vue"],
             })
         );
