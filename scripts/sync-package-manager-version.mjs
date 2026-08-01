@@ -11,8 +11,26 @@ import { fileURLToPath } from "node:url";
 const packageJsonPath = fileURLToPath(
     new URL("../package.json", import.meta.url)
 );
-const packageManagerPattern =
-    /^npm@(?<version>(?<major>0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?)$/u;
+const npmVersionPattern = String.raw`(?<version>(?<major>0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?)`;
+const packageManagerPattern = new RegExp(`^npm@${npmVersionPattern}$`, "u");
+const workflowPackageManagerPattern = new RegExp(
+    `npm install --global --ignore-scripts npm@${npmVersionPattern}`,
+    "gu"
+);
+const workflowPackageManagerTargets = [
+    {
+        expectedOccurrences: 2,
+        path: fileURLToPath(
+            new URL("../.github/workflows/ci.yml", import.meta.url)
+        ),
+    },
+    {
+        expectedOccurrences: 1,
+        path: fileURLToPath(
+            new URL("../.github/workflows/release.yml", import.meta.url)
+        ),
+    },
+];
 
 /**
  * @param {unknown} value
@@ -47,6 +65,23 @@ const readPackageJson = async () => {
             `Failed to read package.json at ${packageJsonPath}: ${message}`,
             { cause: error }
         );
+    }
+};
+
+/**
+ * @param {string} path
+ *
+ * @returns {Promise<string>}
+ */
+const readWorkflow = async (path) => {
+    try {
+        return await readFile(path, "utf8");
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+
+        throw new TypeError(`Failed to read workflow at ${path}: ${message}`, {
+            cause: error,
+        });
     }
 };
 
@@ -95,39 +130,91 @@ const main = async () => {
         existingPackageManager["name"] === expectedPackageManager.name &&
         existingPackageManager["version"] === expectedPackageManager.version &&
         existingPackageManager["onFail"] === expectedPackageManager.onFail;
+    const workflowStates = await Promise.all(
+        workflowPackageManagerTargets.map(async (target) => {
+            const contents = await readWorkflow(target.path);
+            const versions = [
+                ...contents.matchAll(workflowPackageManagerPattern),
+            ]
+                .map((workflowMatch) => workflowMatch.groups?.["version"])
+                .filter((version) => version !== undefined);
 
-    if (aligned) {
+            if (versions.length !== target.expectedOccurrences) {
+                throw new TypeError(
+                    `Expected ${target.expectedOccurrences} exact npm install pin(s) in ${target.path}; found ${versions.length}`
+                );
+            }
+
+            return {
+                ...target,
+                aligned: versions.every((version) => version === npmVersion),
+                contents,
+            };
+        })
+    );
+    const workflowsAligned = workflowStates.every(
+        (workflow) => workflow.aligned
+    );
+
+    if (aligned && workflowsAligned) {
         console.log(
-            `devEngines.packageManager already aligned with packageManager major: npm ${npmMajorVersion}`
+            `Package-manager metadata and workflow pins already aligned with ${packageManager}`
         );
         return;
     }
 
     if (check) {
         throw new TypeError(
-            `devEngines.packageManager is out of sync with the packageManager major. Run "npm run sync:package-manager-version" to set it to npm ${npmMajorVersion}.`
+            `Package-manager metadata or workflow pins are out of sync. Run "npm run sync:package-manager-version" to align them with ${packageManager}.`
         );
     }
 
-    devEngines["packageManager"] = expectedPackageManager;
+    if (!aligned) {
+        devEngines["packageManager"] = expectedPackageManager;
 
-    try {
-        await writeFile(
-            packageJsonPath,
-            `${JSON.stringify(packageJson, null, 4)}\n`,
-            "utf8"
-        );
-        console.log(
-            `Updated devEngines.packageManager to match packageManager major: npm ${npmMajorVersion}`
-        );
-    } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
+        try {
+            await writeFile(
+                packageJsonPath,
+                `${JSON.stringify(packageJson, null, 4)}\n`,
+                "utf8"
+            );
+        } catch (error) {
+            const message =
+                error instanceof Error ? error.message : String(error);
 
-        throw new TypeError(
-            `Failed to write package.json at ${packageJsonPath}: ${message}`,
-            { cause: error }
-        );
+            throw new TypeError(
+                `Failed to write package.json at ${packageJsonPath}: ${message}`,
+                { cause: error }
+            );
+        }
     }
+
+    for (const workflow of workflowStates) {
+        if (workflow.aligned) {
+            continue;
+        }
+
+        const updatedContents = workflow.contents.replace(
+            workflowPackageManagerPattern,
+            `npm install --global --ignore-scripts npm@${npmVersion}`
+        );
+
+        try {
+            await writeFile(workflow.path, updatedContents, "utf8");
+        } catch (error) {
+            const message =
+                error instanceof Error ? error.message : String(error);
+
+            throw new TypeError(
+                `Failed to write workflow at ${workflow.path}: ${message}`,
+                { cause: error }
+            );
+        }
+    }
+
+    console.log(
+        `Aligned devEngines.packageManager and workflow pins with ${packageManager}`
+    );
 };
 
 try {
