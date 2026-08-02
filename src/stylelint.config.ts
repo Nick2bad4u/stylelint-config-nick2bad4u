@@ -741,6 +741,12 @@ const config: Config = {
         "defensive-css/require-flex-wrap": null,
         "defensive-css/require-focus-visible": null,
         "defensive-css/require-forced-colors-focus": null,
+        "defensive-css/require-grid-minmax": [
+            true,
+            {
+                severity: "warning",
+            },
+        ],
         "defensive-css/require-named-grid-lines": [
             true,
             {

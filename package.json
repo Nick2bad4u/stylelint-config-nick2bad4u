@@ -93,7 +93,7 @@
         "types:update": "npx typesync",
         "update-actions": "npx actions-up --yes --style sha",
         "update-all": "npm run update-actions && npm run update-deps",
-        "update-deps": "npx ncu --configFileName .ncurc.json --configFilePath node_modules/ncu-config-nick2bad4u && npm run sync:package-manager-version && npm run sync:peer-stylelint && npm run sync:node-version && npx cross-env npm_config_allow_scripts= npm install",
+        "update-deps": "npx ncu --configFileName .ncurc.json --configFilePath node_modules/ncu-config-nick2bad4u && npm run sync:package-manager-version && npm run sync:peer-stylelint && npm run sync:node-version && npx cross-env npm_config_allow_scripts= npm update --all",
         "verify": "npm run release:verify"
     },
     "dependencies": {

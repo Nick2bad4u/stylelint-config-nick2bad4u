@@ -111,6 +111,29 @@ describe("stylelint-config-nick2bad4u preset", () => {
         expect(unknownRuleWarnings).toHaveLength(0);
     });
 
+    it("requires minmax for fractional grid columns", async () => {
+        expect.assertions(2);
+
+        const unsafeResult = await stylelint.lint({
+            code: ".grid { grid-template-columns: repeat(3, 1fr); }",
+            config: sourceConfig,
+        });
+        const safeResult = await stylelint.lint({
+            code: ".grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }",
+            config: sourceConfig,
+        });
+        const warningsFor = (result: typeof unsafeResult) =>
+            result.results
+                .flatMap((lintResult) => lintResult.warnings)
+                .filter(
+                    (warning) =>
+                        warning.rule === "defensive-css/require-grid-minmax"
+                );
+
+        expect(warningsFor(unsafeResult)).toHaveLength(1);
+        expect(warningsFor(safeResult)).toHaveLength(0);
+    });
+
     it("parses Vue single-file components without treating script setup as CSS", async () => {
         expect.assertions(3);
 
