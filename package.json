@@ -78,7 +78,7 @@
         "lint:yamllint": "yamllint -c .yamllint .",
         "package:check": "npm pack --dry-run",
         "release:check": "npm run release:verify",
-        "release:verify": "npm run build && npm run lint:all:fix && npm run lint:package-check",
+        "release:verify": "npm run build && npm run lint:all && npm run lint:package-check",
         "sync:node-version": "node scripts/sync-node-version-files.mjs",
         "sync:node-version:check": "node scripts/sync-node-version-files.mjs --check",
         "sync:package-manager-version": "node scripts/sync-package-manager-version.mjs",

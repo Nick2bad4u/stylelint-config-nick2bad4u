@@ -182,11 +182,11 @@ jobs:
               run: "npm run release:check"
 
             - name: "Ensure verification did not modify tracked files"
-              if: "startsWith(github.ref, 'refs/tags/v')"
+              if: "${{ github.event_name != 'workflow_dispatch' || !inputs.skip_verify }}"
               run: |
                   set -euo pipefail
                   if ! git diff --quiet || ! git diff --cached --quiet; then
-                    echo "release:check modified files on a tag-triggered release. Ensure main is clean before tagging." >&2
+                    echo "release:check modified tracked files. Verification must be check-only before release automation continues." >&2
                     git status --short
                     exit 1
                   fi

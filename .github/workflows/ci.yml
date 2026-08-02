@@ -156,3 +156,6 @@ jobs:
 
             - name: "Run full verification pipeline"
               run: "npm run release:verify"
+
+            - name: "Ensure verification did not modify tracked files"
+              run: "git diff --exit-code"

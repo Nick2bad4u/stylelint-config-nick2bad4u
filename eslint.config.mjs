@@ -4,7 +4,14 @@ import nickTwoBadFourU from "eslint-config-nick2bad4u";
 const config = [
     ...nickTwoBadFourU.configs.all,
 
-    // Add repository-specific config entries below as needed.
+    {
+        files: [".gitleaks.toml"],
+        name: "Repository/Gitleaks TOML formatting",
+        rules: {
+            // Prettier owns this file because Tombi's native formatter differs by platform.
+            "tombi/tombi": "off",
+        },
+    },
 ];
 
 export default config;
