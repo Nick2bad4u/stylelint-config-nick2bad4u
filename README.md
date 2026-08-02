@@ -1,8 +1,6 @@
 # stylelint-config-nick2bad4u
 
-[![CI](https://github.com/Nick2bad4u/stylelint-config-nick2bad4u/actions/workflows/ci.yml/badge.svg)](https://github.com/Nick2bad4u/stylelint-config-nick2bad4u/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/stylelint-config-nick2bad4u.svg)](https://www.npmjs.com/package/stylelint-config-nick2bad4u)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![NPM license.](https://flat.badgen.net/npm/license/eslint-plugin-typefest?color=purple)](https://github.com/Nick2bad4u/eslint-plugin-typefest/blob/main/LICENSE) [![NPM total downloads.](https://flat.badgen.net/npm/dt/eslint-plugin-typefest?color=pink)](https://www.npmjs.com/package/eslint-plugin-typefest) [![Latest GitHub release.](https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-typefest?color=cyan)](https://github.com/Nick2bad4u/eslint-plugin-typefest/releases) [![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-typefest?color=yellow)](https://github.com/Nick2bad4u/eslint-plugin-typefest/stargazers) [![GitHub forks.](https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-typefest?color=green)](https://github.com/Nick2bad4u/eslint-plugin-typefest/forks) [![GitHub open issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-typefest?color=red)](https://github.com/Nick2bad4u/eslint-plugin-typefest/issues) [![Codecov.](https://flat.badgen.net/codecov/github/Nick2bad4u/eslint-plugin-typefest?color=blue)](https://codecov.io/gh/Nick2bad4u/eslint-plugin-typefest)
 
 Shared Stylelint config for Nick2bad4u projects.
 
