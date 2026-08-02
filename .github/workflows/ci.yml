@@ -156,7 +156,7 @@ jobs:
 
             - name: "Install repository verification tools"
               env:
-                  GITLEAKS_VERSION: "v8.30.1"
+                  GITLEAKS_REVISION: "83d9cd684c87d95d656c1458ef04895a7f1cbd8e"
                   PATHSPEC_VERSION: "1.1.1"
                   PYYAML_VERSION: "6.0.3"
                   YAMLLINT_VERSION: "1.38.0"
@@ -171,7 +171,7 @@ jobs:
                     "PyYAML==${PYYAML_VERSION}" \
                     "yamllint==${YAMLLINT_VERSION}"
                   GOBIN="$tools_dir/bin" go install \
-                    "github.com/zricethezav/gitleaks/v8@${GITLEAKS_VERSION}"
+                    "github.com/zricethezav/gitleaks/v8@${GITLEAKS_REVISION}"
                   "$tools_dir/bin/gitleaks" version
                   "$tools_dir/bin/yamllint" --version
                   echo "$tools_dir/bin" >> "$GITHUB_PATH"
