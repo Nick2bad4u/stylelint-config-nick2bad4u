@@ -126,6 +126,29 @@ jobs:
             - name: "Run reviewed dependency lifecycle scripts"
               run: "npm rebuild"
 
+            - name: "Install repository verification tools"
+              if: "${{ github.event_name != 'workflow_dispatch' || !inputs.skip_verify }}"
+              env:
+                  GITLEAKS_VERSION: "v8.30.1"
+                  PATHSPEC_VERSION: "1.1.1"
+                  PYYAML_VERSION: "6.0.3"
+                  YAMLLINT_VERSION: "1.38.0"
+              run: |
+                  set -euo pipefail
+                  tools_dir="${RUNNER_TEMP}/verification-tools"
+                  python -m venv "$tools_dir"
+                  "$tools_dir/bin/python" -m pip install \
+                    --disable-pip-version-check \
+                    --no-deps \
+                    "pathspec==${PATHSPEC_VERSION}" \
+                    "PyYAML==${PYYAML_VERSION}" \
+                    "yamllint==${YAMLLINT_VERSION}"
+                  GOBIN="$tools_dir/bin" go install \
+                    "github.com/zricethezav/gitleaks/v8@${GITLEAKS_VERSION}"
+                  "$tools_dir/bin/gitleaks" version
+                  "$tools_dir/bin/yamllint" --version
+                  echo "$tools_dir/bin" >> "$GITHUB_PATH"
+
             - name: "Configure Git for release automation"
               if: "github.event_name == 'workflow_dispatch'"
               run: |
