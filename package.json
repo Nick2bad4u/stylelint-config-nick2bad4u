@@ -120,7 +120,7 @@
         "stylelint-plugin-css-performance-budget": "^2.0.7",
         "stylelint-plugin-defensive-css": "^2.9.6",
         "stylelint-plugin-docusaurus": "^2.0.5",
-        "stylelint-plugin-font": "^1.1.6",
+        "stylelint-plugin-font": "^1.1.7",
         "stylelint-plugin-grid": "^1.0.6",
         "stylelint-plugin-use-baseline": "^1.4.5",
         "stylelint-prettier": "^5.0.3",
