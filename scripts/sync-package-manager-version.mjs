@@ -85,14 +85,24 @@ const readWorkflow = async (path) => {
     }
 };
 
-const main = async () => {
-    const { check } = parseArguments();
-    const packageJson = await readPackageJson();
-
-    if (!isRecord(packageJson)) {
-        throw new TypeError("Expected package.json to contain an object");
-    }
-
+/**
+ * Resolve and validate package-manager metadata from package.json.
+ *
+ * @param {Record<string, unknown>} packageJson
+ *
+ * @returns {{
+ *     devEngines: Record<string, unknown>;
+ *     expectedPackageManager: {
+ *         name: string;
+ *         onFail: string;
+ *         version: string;
+ *     };
+ *     metadataAligned: boolean;
+ *     npmVersion: string;
+ *     packageManager: string;
+ * }}
+ */
+const resolvePackageManagerState = (packageJson) => {
     const packageManager = packageJson["packageManager"];
 
     if (typeof packageManager !== "string") {
@@ -119,44 +129,130 @@ const main = async () => {
         );
     }
 
-    const existingPackageManager = devEngines["packageManager"];
     const expectedPackageManager = {
         name: "npm",
         version: npmMajorVersion,
         onFail: "error",
     };
-    const aligned =
+    const existingPackageManager = devEngines["packageManager"];
+    const metadataAligned =
         isRecord(existingPackageManager) &&
         existingPackageManager["name"] === expectedPackageManager.name &&
         existingPackageManager["version"] === expectedPackageManager.version &&
         existingPackageManager["onFail"] === expectedPackageManager.onFail;
+
+    return {
+        devEngines,
+        expectedPackageManager,
+        metadataAligned,
+        npmVersion,
+        packageManager,
+    };
+};
+
+/**
+ * Read and validate the npm pins in one workflow.
+ *
+ * @param {{ expectedOccurrences: number; path: string }} target
+ * @param {string} npmVersion
+ *
+ * @returns {Promise<{
+ *     aligned: boolean;
+ *     contents: string;
+ *     expectedOccurrences: number;
+ *     path: string;
+ * }>}
+ */
+const readWorkflowState = async (target, npmVersion) => {
+    const contents = await readWorkflow(target.path);
+    const versions = [...contents.matchAll(workflowPackageManagerPattern)]
+        .map((workflowMatch) => workflowMatch.groups?.["version"])
+        .filter((version) => version !== undefined);
+
+    if (versions.length !== target.expectedOccurrences) {
+        throw new TypeError(
+            `Expected ${target.expectedOccurrences} exact npm install pin(s) in ${target.path}; found ${versions.length}`
+        );
+    }
+
+    return {
+        ...target,
+        aligned: versions.every((version) => version === npmVersion),
+        contents,
+    };
+};
+
+/**
+ * Write a managed file with contextual error reporting.
+ *
+ * @param {string} path
+ * @param {string} contents
+ * @param {string} description
+ *
+ * @returns {Promise<void>}
+ */
+const writeManagedFile = async (path, contents, description) => {
+    try {
+        await writeFile(path, contents, "utf8");
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+
+        throw new TypeError(`Failed to write ${description}: ${message}`, {
+            cause: error,
+        });
+    }
+};
+
+/**
+ * Update one workflow when its npm pin is stale.
+ *
+ * @param {{ aligned: boolean; contents: string; path: string }} workflow
+ * @param {string} npmVersion
+ *
+ * @returns {Promise<void>}
+ */
+const updateWorkflow = async (workflow, npmVersion) => {
+    if (workflow.aligned) {
+        return;
+    }
+
+    const updatedContents = workflow.contents.replace(
+        workflowPackageManagerPattern,
+        `npm install --global --ignore-scripts npm@${npmVersion}`
+    );
+
+    await writeManagedFile(
+        workflow.path,
+        updatedContents,
+        `workflow at ${workflow.path}`
+    );
+};
+
+const main = async () => {
+    const { check } = parseArguments();
+    const packageJson = await readPackageJson();
+
+    if (!isRecord(packageJson)) {
+        throw new TypeError("Expected package.json to contain an object");
+    }
+
+    const {
+        devEngines,
+        expectedPackageManager,
+        metadataAligned,
+        npmVersion,
+        packageManager,
+    } = resolvePackageManagerState(packageJson);
     const workflowStates = await Promise.all(
-        workflowPackageManagerTargets.map(async (target) => {
-            const contents = await readWorkflow(target.path);
-            const versions = [
-                ...contents.matchAll(workflowPackageManagerPattern),
-            ]
-                .map((workflowMatch) => workflowMatch.groups?.["version"])
-                .filter((version) => version !== undefined);
-
-            if (versions.length !== target.expectedOccurrences) {
-                throw new TypeError(
-                    `Expected ${target.expectedOccurrences} exact npm install pin(s) in ${target.path}; found ${versions.length}`
-                );
-            }
-
-            return {
-                ...target,
-                aligned: versions.every((version) => version === npmVersion),
-                contents,
-            };
-        })
+        workflowPackageManagerTargets.map((target) =>
+            readWorkflowState(target, npmVersion)
+        )
     );
     const workflowsAligned = workflowStates.every(
         (workflow) => workflow.aligned
     );
 
-    if (aligned && workflowsAligned) {
+    if (metadataAligned && workflowsAligned) {
         console.log(
             `Package-manager metadata and workflow pins already aligned with ${packageManager}`
         );
@@ -169,48 +265,19 @@ const main = async () => {
         );
     }
 
-    if (!aligned) {
+    if (!metadataAligned) {
         devEngines["packageManager"] = expectedPackageManager;
 
-        try {
-            await writeFile(
-                packageJsonPath,
-                `${JSON.stringify(packageJson, null, 4)}\n`,
-                "utf8"
-            );
-        } catch (error) {
-            const message =
-                error instanceof Error ? error.message : String(error);
-
-            throw new TypeError(
-                `Failed to write package.json at ${packageJsonPath}: ${message}`,
-                { cause: error }
-            );
-        }
-    }
-
-    for (const workflow of workflowStates) {
-        if (workflow.aligned) {
-            continue;
-        }
-
-        const updatedContents = workflow.contents.replace(
-            workflowPackageManagerPattern,
-            `npm install --global --ignore-scripts npm@${npmVersion}`
+        await writeManagedFile(
+            packageJsonPath,
+            `${JSON.stringify(packageJson, null, 4)}\n`,
+            `package.json at ${packageJsonPath}`
         );
-
-        try {
-            await writeFile(workflow.path, updatedContents, "utf8");
-        } catch (error) {
-            const message =
-                error instanceof Error ? error.message : String(error);
-
-            throw new TypeError(
-                `Failed to write workflow at ${workflow.path}: ${message}`,
-                { cause: error }
-            );
-        }
     }
+
+    await Promise.all(
+        workflowStates.map((workflow) => updateWorkflow(workflow, npmVersion))
+    );
 
     console.log(
         `Aligned devEngines.packageManager and workflow pins with ${packageManager}`

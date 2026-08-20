@@ -364,9 +364,6 @@ const config: Config = {
          */
         "@double-great/stylelint-a11y", // Accessibility rules
 
-        /*
-         * Core functional plugins for CSS best practices and performance.
-         */
         // Core functional plugins
         "stylelint-plugin-defensive-css",
         "stylelint-plugin-font",
@@ -375,9 +372,6 @@ const config: Config = {
         "stylelint-prettier",
         "stylelint-high-performance-animation",
 
-        /*
-         * Modern CSS standards and feature plugins.
-         */
         // Modern CSS and Standards plugins
         "@stylistic/stylelint-plugin", // Styling rules removed in Stylelint 16
         "stylelint-scales", // Enforce numeric value scales
@@ -385,16 +379,10 @@ const config: Config = {
         "stylelint-plugin-use-baseline", // Enforce CSS features in baseline
         "stylelint-value-no-unknown-custom-properties", // Validate custom properties
 
-        /*
-         * Browser compatibility and cross-platform plugins.
-         */
         // Browser compatibility plugins
         "stylelint-no-browser-hacks", // Disallow browser hacks
         "stylelint-no-unsupported-browser-features", // Check browser support
 
-        /*
-         * Code organization and maintenance utility plugins.
-         */
         // Utility plugins
         "stylelint-order",
         "stylelint-declaration-block-no-ignored-properties",

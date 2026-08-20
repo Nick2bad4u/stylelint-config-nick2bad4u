@@ -61,6 +61,43 @@ const normalizeNodeVersion = (version) => {
 const isRecord = (value) => typeof value === "object" && value !== null;
 
 /**
+ * Parse an explicit Node.js version argument at the current index.
+ *
+ * @param {readonly string[]} argumentList
+ * @param {number} index
+ * @param {string} argument
+ *
+ * @returns {{ consumedArguments: number; explicitVersion: string } | null}
+ */
+const parseExplicitVersionArgument = (argumentList, index, argument) => {
+    if (argument === "--version") {
+        const nextArgument = argumentList[index + 1];
+
+        if (typeof nextArgument !== "string") {
+            throw new TypeError("Expected a version after --version.");
+        }
+
+        return {
+            consumedArguments: 1,
+            explicitVersion: normalizeNodeVersion(nextArgument),
+        };
+    }
+
+    const versionPrefix = "--version=";
+
+    if (!argument.startsWith(versionPrefix)) {
+        return null;
+    }
+
+    return {
+        consumedArguments: 0,
+        explicitVersion: normalizeNodeVersion(
+            argument.slice(versionPrefix.length)
+        ),
+    };
+};
+
+/**
  * Parses command-line arguments.
  *
  * @param {readonly string[]} argumentList
@@ -101,22 +138,15 @@ const parseArguments = (argumentList) => {
             continue;
         }
 
-        if (argument === "--version") {
-            const nextArgument = argumentList[index + 1];
+        const versionArgument = parseExplicitVersionArgument(
+            argumentList,
+            index,
+            argument
+        );
 
-            if (typeof nextArgument !== "string") {
-                throw new TypeError("Expected a version after --version.");
-            }
-
-            explicitVersion = normalizeNodeVersion(nextArgument);
-            index += 1;
-            continue;
-        }
-
-        if (argument.startsWith("--version=")) {
-            explicitVersion = normalizeNodeVersion(
-                argument.slice("--version=".length)
-            );
+        if (versionArgument !== null) {
+            explicitVersion = versionArgument.explicitVersion;
+            index += versionArgument.consumedArguments;
             continue;
         }
 

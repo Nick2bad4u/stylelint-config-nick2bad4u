@@ -74,7 +74,7 @@ jobs:
 
         steps:
             - name: "Harden the runner (Audit all outbound calls)"
-              uses: "step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920" # v2.20.0
+              uses: "step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c" # v2.21.0
               with:
                   egress-policy: "audit"
 
@@ -290,7 +290,13 @@ jobs:
                     exit 1
                   fi
 
-                  git add -A
+                  git add -- package.json package-lock.json
+                  if ! git diff --quiet; then
+                    echo "Unexpected unstaged changes found after preparing the release version." >&2
+                    git status --short
+                    exit 1
+                  fi
+
                   if git diff --cached --quiet; then
                     echo "No staged changes found for release commit." >&2
                     exit 1
