@@ -84,14 +84,20 @@ The shared config includes overrides and parsers for:
 - Build command: `npm run build`
 - Export style: ESM only
 - Peer dependency: `stylelint@^17.14.0`
+- Node.js: `>=22.12.0`
 
 ## File progress
 
 Version 3 enables file progress by default and requires Stylelint 17.14.0 or
-newer within major 17. Upgrade Stylelint when moving from version 2.
+newer within major 17, plus Node.js 22.12.0 or newer. Upgrade Stylelint and Node.js
+when moving from version 2. Some included CommonJS plugins load Stylelint's ESM
+entrypoint, which requires Node.js 22.12.0 in the supported Node 22 line.
 
-Progress uses `stderr`, so JSON formatter output on `stdout` stays readable
-by other tools. Progress also appears in CI and other non-interactive terminals.
+Progress uses `stderr`, leaving `stdout` available to API callers and fixed CSS.
+The Stylelint CLI also writes diagnostics to `stderr`. For a separate JSON report,
+use `stylelint "**/*.css" --formatter json --output-file stylelint-report.json`;
+read the report file instead of combining progress and diagnostics into one pipe.
+Progress also appears in CI and other non-interactive terminals.
 Counts cover observed file-processing events across the process; cached files
 and files that fail to parse before rules execute may not appear. The summary
 runs when the process exits, including in applications that call Stylelint
