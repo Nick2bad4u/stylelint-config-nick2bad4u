@@ -85,6 +85,7 @@ const config: Config = {
         "stylelint-config-standard",
         "stylelint-config-recess-order",
         "stylelint-config-standard-scss",
+        "stylelint-plugin-file-progress/configs/recommended",
         "stylelint-plugin-docusaurus/configs/docusaurus-all",
         "stylelint-plugin-font/configs/font-all",
         "stylelint-plugin-grid/configs/grid-all",

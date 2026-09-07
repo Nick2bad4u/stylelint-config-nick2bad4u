@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import stylelint from "stylelint";
 import packageConfig from "stylelint-config-nick2bad4u";
 import { describe, expect, it } from "vitest";
@@ -5,6 +6,46 @@ import { describe, expect, it } from "vitest";
 import sourceConfig from "../src/stylelint.config";
 
 describe("stylelint-config-nick2bad4u preset", () => {
+    it("reports file progress without changing diagnostics and supports disabling it", () => {
+        expect.assertions(7);
+
+        const run = (isDisabled: boolean) =>
+            spawnSync(
+                process.execPath,
+                [
+                    "--input-type=module",
+                    "--eval",
+                    `
+                import stylelint from "stylelint";
+                import sharedConfig from "stylelint-config-nick2bad4u";
+                const config = ${isDisabled ? '{ ...sharedConfig, rules: { ...sharedConfig.rules, "file-progress/activate": null } }' : "sharedConfig"};
+                const result = await stylelint.lint({
+                    code: ".example { color: red; }",
+                    codeFilename: "progress-consumer.css",
+                    cache: false,
+                    config,
+                    formatter: "json",
+                });
+                process.stdout.write(result.report);
+            `,
+                ],
+                { encoding: "utf8", timeout: 30_000 }
+            );
+
+        const enabled = run(false);
+        const disabled = run(true);
+
+        expect(enabled.status).toBe(0);
+        expect(disabled.status).toBe(0);
+        expect(JSON.parse(enabled.stdout)).toStrictEqual(
+            JSON.parse(disabled.stdout)
+        );
+        expect(enabled.stderr).toContain("progress-consumer.css");
+        expect(enabled.stderr.match(/Lint complete\./gv)).toHaveLength(1);
+        expect(disabled.stderr).not.toContain("progress-consumer.css");
+        expect(disabled.stderr).not.toContain("Lint complete.");
+    });
+
     it("exports a stylelint config object", () => {
         expect.assertions(1);
 
@@ -18,6 +59,7 @@ describe("stylelint-config-nick2bad4u preset", () => {
             "stylelint-config-standard",
             "stylelint-config-recess-order",
             "stylelint-config-standard-scss",
+            "stylelint-plugin-file-progress/configs/recommended",
             "stylelint-plugin-docusaurus/configs/docusaurus-all",
             "stylelint-plugin-font/configs/font-all",
             "stylelint-plugin-grid/configs/grid-all",
