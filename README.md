@@ -1,6 +1,6 @@
 # stylelint-config-nick2bad4u
 
-[![NPM license.](https://flat.badgen.net/npm/license/eslint-plugin-typefest?color=purple)](https://github.com/Nick2bad4u/eslint-plugin-typefest/blob/main/LICENSE) [![NPM total downloads.](https://flat.badgen.net/npm/dt/eslint-plugin-typefest?color=pink)](https://www.npmjs.com/package/eslint-plugin-typefest) [![Latest GitHub release.](https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-typefest?color=cyan)](https://github.com/Nick2bad4u/eslint-plugin-typefest/releases) [![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-typefest?color=yellow)](https://github.com/Nick2bad4u/eslint-plugin-typefest/stargazers) [![GitHub forks.](https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-typefest?color=green)](https://github.com/Nick2bad4u/eslint-plugin-typefest/forks) [![GitHub open issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-typefest?color=red)](https://github.com/Nick2bad4u/eslint-plugin-typefest/issues) [![Codecov.](https://flat.badgen.net/codecov/github/Nick2bad4u/eslint-plugin-typefest?color=blue)](https://codecov.io/gh/Nick2bad4u/eslint-plugin-typefest)
+[![NPM license.](https://flat.badgen.net/npm/license/stylelint-config-nick2bad4u?color=purple)](https://github.com/Nick2bad4u/stylelint-config-nick2bad4u/blob/main/LICENSE) [![NPM total downloads.](https://flat.badgen.net/npm/dt/stylelint-config-nick2bad4u?color=pink)](https://www.npmjs.com/package/stylelint-config-nick2bad4u) [![Latest GitHub release.](https://flat.badgen.net/github/release/Nick2bad4u/stylelint-config-nick2bad4u?color=cyan)](https://github.com/Nick2bad4u/stylelint-config-nick2bad4u/releases) [![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/stylelint-config-nick2bad4u?color=yellow)](https://github.com/Nick2bad4u/stylelint-config-nick2bad4u/stargazers) [![GitHub forks.](https://flat.badgen.net/github/forks/Nick2bad4u/stylelint-config-nick2bad4u?color=green)](https://github.com/Nick2bad4u/stylelint-config-nick2bad4u/forks) [![GitHub open issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/stylelint-config-nick2bad4u?color=red)](https://github.com/Nick2bad4u/stylelint-config-nick2bad4u/issues) [![Codecov.](https://flat.badgen.net/codecov/github/Nick2bad4u/stylelint-config-nick2bad4u?color=blue)](https://codecov.io/gh/Nick2bad4u/stylelint-config-nick2bad4u)
 
 Shared Stylelint config for Nick2bad4u projects.
 
@@ -51,6 +51,8 @@ export default {
 
 - Standard modern Stylelint presets
 - SCSS support
+- File progress and a process-shutdown summary via
+  `stylelint-plugin-file-progress/configs/recommended`
 - Tailwind compatibility
 - Docusaurus CSS support
 - Accessibility, logical CSS, and performance plugins
@@ -81,7 +83,41 @@ The shared config includes overrides and parsers for:
 - Package entrypoint: `dist/stylelint.config.js`
 - Build command: `npm run build`
 - Export style: ESM only
-- Peer dependency: `stylelint@^17.9.1`
+- Peer dependency: `stylelint@^17.14.0`
+- Node.js: `>=22.12.0`
+
+## File progress
+
+Version 3 enables file progress by default and requires Stylelint 17.14.0 or
+newer within major 17, plus Node.js 22.12.0 or newer. Upgrade Stylelint and Node.js
+when moving from version 2. Some included CommonJS plugins load Stylelint's ESM
+entrypoint, which requires Node.js 22.12.0 in the supported Node 22 line.
+
+Progress uses `stderr`, leaving `stdout` available to API callers and fixed CSS.
+The Stylelint CLI also writes diagnostics to `stderr`. For a separate JSON report,
+use `stylelint "**/*.css" --formatter json --output-file stylelint-report.json`;
+read the report file instead of combining progress and diagnostics into one pipe.
+Progress also appears in CI and other non-interactive terminals.
+Counts cover observed file-processing events across the process; cached files
+and files that fail to parse before rules execute may not appear. The summary
+runs when the process exits, including in applications that call Stylelint
+more than once.
+
+Disable progress through a local rule override:
+
+```js
+export default {
+ extends: ["stylelint-config-nick2bad4u"],
+ rules: {
+  "file-progress/activate": null,
+ },
+};
+```
+
+To keep only the summary, set `"file-progress/activate"` to
+`[true, { mode: "summary-only" }]`. See the
+[plugin options and colored demonstrations](https://nick2bad4u.github.io/stylelint-plugin-file-progress/)
+for the other display modes and presets.
 
 ## Development checks
 

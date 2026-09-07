@@ -120,6 +120,7 @@
         "stylelint-plugin-css-performance-budget": "^2.0.7",
         "stylelint-plugin-defensive-css": "^2.9.6",
         "stylelint-plugin-docusaurus": "^2.0.5",
+        "stylelint-plugin-file-progress": "^1.0.0",
         "stylelint-plugin-font": "^1.1.7",
         "stylelint-plugin-grid": "^1.0.6",
         "stylelint-plugin-use-baseline": "^1.4.5",
@@ -166,7 +167,7 @@
         "yamllint-config-nick2bad4u": "^1.1.1"
     },
     "peerDependencies": {
-        "stylelint": "^17.9.1"
+        "stylelint": "^17.14.0"
     },
     "peerDependenciesMeta": {
         "stylelint": {
@@ -175,7 +176,7 @@
     },
     "packageManager": "npm@12.0.2",
     "engines": {
-        "node": ">=22.0.0"
+        "node": ">=22.12.0"
     },
     "devEngines": {
         "runtime": {
