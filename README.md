@@ -98,6 +98,14 @@ The Stylelint CLI also writes diagnostics to `stderr`. For a separate JSON repor
 use `stylelint "**/*.css" --formatter json --output-file stylelint-report.json`;
 read the report file instead of combining progress and diagnostics into one pipe.
 Progress also appears in CI and other non-interactive terminals.
+The display matches `eslint-config-nick2bad4u`: dim activity text, a dots spinner,
+colored relative directories, and an emphasized green filename on the next line.
+The success message is `Linting complete!`; detailed metrics are disabled by
+default. The shared rule explicitly sets all current display options, using
+`pathFormat: "relative"` for the ESLint config's legacy
+`hideDirectoryNames: false` setting. Version 3.0.1 requires progress-plugin 1.0.2
+or newer within major 1 to include the matching terminal colors and formatting.
+
 Counts cover observed file-processing events across the process; cached files
 and files that fail to parse before rules execute may not appear. The summary
 runs when the process exits, including in applications that call Stylelint

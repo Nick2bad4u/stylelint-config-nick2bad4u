@@ -40,10 +40,12 @@ describe("stylelint-config-nick2bad4u preset", () => {
         expect(JSON.parse(enabled.stdout)).toStrictEqual(
             JSON.parse(disabled.stdout)
         );
-        expect(enabled.stderr).toContain("progress-consumer.css");
-        expect(enabled.stderr.match(/Lint complete\./gv)).toHaveLength(1);
+        expect(enabled.stderr).toContain(
+            "SFP • linting\n  ↳ progress-consumer.css"
+        );
+        expect(enabled.stderr.match(/Linting complete!/gv)).toHaveLength(1);
         expect(disabled.stderr).not.toContain("progress-consumer.css");
-        expect(disabled.stderr).not.toContain("Lint complete.");
+        expect(disabled.stderr).not.toContain("Linting complete!");
     });
 
     it("exports a stylelint config object", () => {
