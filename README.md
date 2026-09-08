@@ -50,6 +50,7 @@ export default {
 ## What this config includes
 
 - Standard modern Stylelint presets
+- Unmatchable CSS selector detection via `selector-no-unmatchable`
 - SCSS support
 - File progress and a process-shutdown summary via
   `stylelint-plugin-file-progress/configs/recommended`
@@ -83,8 +84,19 @@ The shared config includes overrides and parsers for:
 - Package entrypoint: `dist/stylelint.config.js`
 - Build command: `npm run build`
 - Export style: ESM only
-- Peer dependency: `stylelint@^17.14.0`
+- Peer dependency: `stylelint@^17.15.0`
 - Node.js: `>=22.12.0`
+
+## Migrating to version 4
+
+Version 4 enables [`selector-no-unmatchable`](https://stylelint.io/user-guide/rules/selector-no-unmatchable/)
+and requires Stylelint 17.15.0 or newer within major 17. Upgrade Stylelint when
+moving from version 3; the Node.js minimum remains 22.12.0.
+
+The rule reports valid CSS selectors that cannot match anything, such as
+`label:checked` or `::before:first-child`. Existing stylesheets may produce new
+diagnostics. It is disabled for SCSS files because SCSS nesting behaves
+differently from the CSS nesting semantics used by this rule.
 
 ## File progress
 

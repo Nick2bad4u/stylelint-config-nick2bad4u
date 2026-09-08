@@ -155,6 +155,68 @@ describe("stylelint-config-nick2bad4u preset", () => {
         expect(unknownRuleWarnings).toHaveLength(0);
     });
 
+    it.each([
+        {
+            code: "label:checked { color: red; }",
+            codeFilename: "selector.css",
+            expectedWarnings: 1,
+        },
+        {
+            code: "input:checked { color: red; }",
+            codeFilename: "selector.css",
+            expectedWarnings: 0,
+        },
+        {
+            code: "::before:first-child { color: red; }",
+            codeFilename: "selector.css",
+            expectedWarnings: 1,
+        },
+        {
+            code: "a::before { .foo:hover & { color: red; } }",
+            codeFilename: "nested.css",
+            expectedWarnings: 1,
+        },
+        {
+            code: "a::before { .foo:hover & { color: red; } }",
+            codeFilename: "nested.scss",
+            expectedWarnings: 0,
+        },
+        {
+            code: ".foo:hover a::before { color: red; }",
+            codeFilename: "selector.css",
+            expectedWarnings: 0,
+        },
+        {
+            code: "<style>label:checked { color: red; }</style>",
+            codeFilename: "Selector.vue",
+            expectedWarnings: 1,
+        },
+    ])(
+        "reports $expectedWarnings unmatchable selectors in $codeFilename: $code",
+        async ({ code, codeFilename, expectedWarnings }) => {
+            expect.assertions(3);
+
+            const lintResult = await stylelint.lint({
+                cache: false,
+                code,
+                codeFilename,
+                config: packageConfig,
+            });
+            const parseErrors = lintResult.results.flatMap(
+                (result) => result.parseErrors
+            );
+            const warnings = lintResult.results
+                .flatMap((result) => result.warnings)
+                .filter(
+                    (warning) => warning.rule === "selector-no-unmatchable"
+                );
+
+            expect(lintResult.results).toHaveLength(1);
+            expect(parseErrors).toHaveLength(0);
+            expect(warnings).toHaveLength(expectedWarnings);
+        }
+    );
+
     it("requires minmax for fractional grid columns", async () => {
         expect.assertions(2);
 

@@ -336,6 +336,8 @@ const config: Config = {
                 // Selector-no-invalid is CSS-only; SCSS placeholder selectors
                 // (%name) and other SCSS-specific syntax would trigger false positives.
                 "selector-no-invalid": null,
+                // SCSS nesting can represent pseudo-elements unlike CSS nesting.
+                "selector-no-unmatchable": null,
             },
         },
     ],
@@ -1180,6 +1182,13 @@ const config: Config = {
          */
         "selector-no-invalid": true,
         "selector-no-qualifying-type": null,
+        /*
+         * Disallow valid CSS selectors that can never match an element.
+         * Disabled for SCSS because this rule uses CSS nesting semantics.
+         *
+         * @see {@link https://stylelint.io/user-guide/rules/selector-no-unmatchable | selector-no-unmatchable}
+         */
+        "selector-no-unmatchable": true,
         "selector-not-notation": "complex",
         "selector-pseudo-class-allowed-list": null,
         "selector-pseudo-class-disallowed-list": null,
