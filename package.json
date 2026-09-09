@@ -56,6 +56,7 @@
         "lint:all": "npm run lint && npm run typecheck && npm run test && npm run lint:remark && npm run test:stylelint-config && npm run lint:prettier && npm run lint:package-manager-version && npm run lint:package && npm run lint:yaml && npm run lint:gitleaks && npm run lint:yamllint && npm run lint:secretlint",
         "lint:all:fix": "npm run lint:fix && npm run lint:remark:fix && npm run lint:prettier:fix && npm run sync:package-manager-version && npm run lint:package:fix && npm run typecheck && npm run test && npm run test:stylelint-config && npm run lint:yaml:fix && npm run lint:secretlint",
         "lint:attw": "npx attw . --pack --profile esm-only --entrypoints \".\" \"./package.json\"",
+        "lint:css": "npx stylelint '**/*.{css,scss}'",
         "lint:fix": "npm run lint -- --fix",
         "lint:gitleaks": "gitleaks dir --config .gitleaks.toml .",
         "lint:jscpd": "npx jscpd --config node_modules/jscpd-config-nick2bad4u/jscpd.json",
